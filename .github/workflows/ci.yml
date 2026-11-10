@@ -10,10 +10,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.4', '8.3' ]
+        php: [ '7.4', '8.3', '8.4', '8.5' ]
     name: PHP ${{ matrix.php }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -32,11 +32,11 @@ jobs:
         run: composer phpunit
 
   integration:
-    name: Integration (PHP 8.3 + MySQL)
+    name: Integration (PHP 8.5 + MySQL)
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:8.4
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
@@ -47,12 +47,12 @@ jobs:
           --health-timeout=5s
           --health-retries=10
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.5'
           tools: composer
           extensions: mysqli
           coverage: none
@@ -69,5 +69,4 @@ jobs:
       - name: PHPUnit (integration — schema migration against real WP + MySQL)
         env:
           WP_TESTS_DIR: /tmp/wordpress-tests-lib
-          WP_TESTS_PHPUNIT_POLYFILLS_PATH: ${{ github.workspace }}/vendor/yoast/phpunit-polyfills
         run: composer phpunit:integration

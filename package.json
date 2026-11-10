@@ -12,7 +12,10 @@
     "env:clean": "wp-env clean all",
     "env:destroy": "wp-env destroy"
   },
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "devDependencies": {
-    "@wordpress/env": "^10.6.0"
+    "@wordpress/env": "^12.1.0"
   }
 }
