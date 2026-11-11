@@ -2,16 +2,16 @@
 /**
  * Guard-contract tests for the collision notice's dismiss handler.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Collision;
+namespace ForestValley\RedirectHelper\Tests\Unit\Collision;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Collision\CollisionNotice;
+use ForestValley\RedirectHelper\Collision\CollisionNotice;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;

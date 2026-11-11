@@ -2,17 +2,17 @@
 /**
  * Unit tests for the server-side 404 capture.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Capture;
+namespace ForestValley\RedirectHelper\Tests\Unit\Capture;
 
 use Brain\Monkey\Actions;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Capture\NotFoundCapture;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Capture\NotFoundCapture;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 
 /**
  * Exercises the full capture path through the real classifier, normalizer,
@@ -78,7 +78,7 @@ final class NotFoundCaptureTest extends WpdbTestCase {
 	 * @param int $live_store_id The discovered `ecwid_store_id` option value.
 	 */
 	private function connect( int $live_store_id = self::STORE_ID ): void {
-		$this->options['fv_erh_connection'] = array(
+		$this->options['fvrh404_connection'] = array(
 			'connected' => true,
 			'store_id'  => self::STORE_ID,
 		);

@@ -2,17 +2,17 @@
 /**
  * Unit tests for the paid-tier CTA dismissal state.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Upsell;
+namespace ForestValley\RedirectHelper\Tests\Unit\Upsell;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
-use FV\WPEcwidRedirectHelper\Upsell\UpgradeCta;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Upsell\UpgradeCta;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
@@ -66,7 +66,7 @@ final class UpgradeCtaTest extends TestCase {
 
 	public function test_dismissal_persists_for_that_key_only(): void {
 		// Simulate the option a dismissal would write.
-		$this->options['fv_erh_cta_dismissed'] = array( 'log-deleted-redirects' );
+		$this->options['fvrh404_cta_dismissed'] = array( 'log-deleted-redirects' );
 
 		$cta = $this->cta();
 
@@ -75,7 +75,7 @@ final class UpgradeCtaTest extends TestCase {
 	}
 
 	public function test_malformed_option_is_treated_as_no_dismissals(): void {
-		$this->options['fv_erh_cta_dismissed'] = 'not-an-array';
+		$this->options['fvrh404_cta_dismissed'] = 'not-an-array';
 
 		$this->assertFalse( $this->cta()->is_dismissed( 'log-storefront-layer' ) );
 	}

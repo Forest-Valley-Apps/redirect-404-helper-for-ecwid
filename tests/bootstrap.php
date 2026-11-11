@@ -6,7 +6,7 @@
  * by Brain Monkey. The WP integration harness (wp-phpunit) is wired in a later
  * session when features need a real WordPress runtime.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );

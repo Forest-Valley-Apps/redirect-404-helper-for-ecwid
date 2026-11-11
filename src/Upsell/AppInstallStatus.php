@@ -2,14 +2,14 @@
 /**
  * Resolves whether the hosted app is installed, from cached signals only.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Upsell;
+namespace ForestValley\RedirectHelper\Upsell;
 
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Api\BackendClient;
 
 defined( 'ABSPATH' ) || exit;
 

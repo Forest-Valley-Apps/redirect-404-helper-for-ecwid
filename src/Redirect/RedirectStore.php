@@ -2,15 +2,15 @@
 /**
  * Repository for manual WP-layer redirect rules.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Redirect;
+namespace ForestValley\RedirectHelper\Redirect;
 
-use FV\WPEcwidRedirectHelper\Log\Schema;
-use FV\WPEcwidRedirectHelper\Url\RuleMatcher;
+use ForestValley\RedirectHelper\Log\Schema;
+use ForestValley\RedirectHelper\Url\RuleMatcher;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -71,7 +71,7 @@ final class RedirectStore {
 	/**
 	 * Max length stored for a source/destination.
 	 *
-	 * Same bound as the 404 log's path column ({@see \FV\WPEcwidRedirectHelper\Log\NotFoundLog}),
+	 * Same bound as the 404 log's path column ({@see \ForestValley\RedirectHelper\Log\NotFoundLog}),
 	 * so a rule created from a logged 404 always fits.
 	 *
 	 * @var int

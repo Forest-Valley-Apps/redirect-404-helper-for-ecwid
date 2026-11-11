@@ -2,12 +2,12 @@
 /**
  * Database schema for the 404 log.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Log;
+namespace ForestValley\RedirectHelper\Log;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -41,21 +41,21 @@ final class Schema {
 	 *
 	 * @var string
 	 */
-	public const VERSION_OPTION = 'fv_erh_db_version';
+	public const VERSION_OPTION = 'fvrh404_db_version';
 
 	/**
 	 * Unprefixed name of the 404 log table.
 	 *
 	 * @var string
 	 */
-	private const LOG_TABLE_BASE = 'fv_erh_404_log';
+	private const LOG_TABLE_BASE = 'fvrh404_404_log';
 
 	/**
 	 * Unprefixed name of the manual redirects table.
 	 *
 	 * @var string
 	 */
-	private const REDIRECTS_TABLE_BASE = 'fv_erh_redirects';
+	private const REDIRECTS_TABLE_BASE = 'fvrh404_redirects';
 
 	/**
 	 * Fully-prefixed name of the 404 log table.

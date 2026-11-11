@@ -2,16 +2,16 @@
 /**
  * Derives which URL layer a 404-log row can be fixed at, and where to route it.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Admin;
+namespace ForestValley\RedirectHelper\Admin;
 
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
-use FV\WPEcwidRedirectHelper\Url\UrlClassifier;
-use FV\WPEcwidRedirectHelper\Verdict\VerdictChecker;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Url\UrlClassifier;
+use ForestValley\RedirectHelper\Verdict\VerdictChecker;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -87,8 +87,8 @@ final class RowLayer {
 	 */
 	public static function label( string $layer ): string {
 		return self::LAYER_STOREFRONT === $layer
-			? __( 'Storefront', 'redirect-404-helper-for-ecwid' )
-			: __( 'WordPress', 'redirect-404-helper-for-ecwid' );
+			? __( 'Storefront', 'forest-valley-redirect-404-helper-for-ecwid' )
+			: __( 'WordPress', 'forest-valley-redirect-404-helper-for-ecwid' );
 	}
 
 	/**

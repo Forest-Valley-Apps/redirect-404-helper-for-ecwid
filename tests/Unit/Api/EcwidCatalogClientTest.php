@@ -2,16 +2,16 @@
 /**
  * Unit tests for the Ecwid storefront catalog client.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Api;
+namespace ForestValley\RedirectHelper\Tests\Unit\Api;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Api\EcwidCatalogClient;
+use ForestValley\RedirectHelper\Api\EcwidCatalogClient;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 

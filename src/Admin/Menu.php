@@ -2,12 +2,12 @@
 /**
  * Admin menu registration.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Admin;
+namespace ForestValley\RedirectHelper\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -103,8 +103,8 @@ final class Menu {
 	 */
 	public function add_pages(): void {
 		add_menu_page(
-			__( 'Redirect & 404 Helper for Ecwid', 'redirect-404-helper-for-ecwid' ),
-			__( 'Redirect & 404', 'redirect-404-helper-for-ecwid' ),
+			__( 'Forest Valley Redirect & 404 Helper for Ecwid', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			__( 'Redirect & 404', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			self::CAPABILITY,
 			self::PARENT_SLUG,
 			array( $this->log_page, 'render' ),
@@ -113,8 +113,8 @@ final class Menu {
 
 		$log_hook = add_submenu_page(
 			self::PARENT_SLUG,
-			__( '404 Log', 'redirect-404-helper-for-ecwid' ),
-			__( '404 Log', 'redirect-404-helper-for-ecwid' ),
+			__( '404 Log', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			__( '404 Log', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			self::CAPABILITY,
 			self::PARENT_SLUG,
 			array( $this->log_page, 'render' )
@@ -122,8 +122,8 @@ final class Menu {
 
 		$redirects_hook = add_submenu_page(
 			self::PARENT_SLUG,
-			__( 'Redirects', 'redirect-404-helper-for-ecwid' ),
-			__( 'Redirects', 'redirect-404-helper-for-ecwid' ),
+			__( 'Redirects', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			__( 'Redirects', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			self::CAPABILITY,
 			RedirectsPage::PAGE_SLUG,
 			array( $this->redirects_page, 'render' )
@@ -131,8 +131,8 @@ final class Menu {
 
 		add_submenu_page(
 			self::PARENT_SLUG,
-			__( 'Redirect & 404 Helper for Ecwid', 'redirect-404-helper-for-ecwid' ),
-			__( 'Settings', 'redirect-404-helper-for-ecwid' ),
+			__( 'Forest Valley Redirect & 404 Helper for Ecwid', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			__( 'Settings', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			self::CAPABILITY,
 			SettingsPage::PAGE_SLUG,
 			array( $this->settings_page, 'render_page' )
@@ -140,8 +140,8 @@ final class Menu {
 
 		add_submenu_page(
 			self::PARENT_SLUG,
-			__( 'Upgrade — Powered by Redirect & 404 Manager', 'redirect-404-helper-for-ecwid' ),
-			__( 'Upgrade', 'redirect-404-helper-for-ecwid' ),
+			__( 'Upgrade — Powered by Redirect & 404 Manager', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			__( 'Upgrade', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			self::CAPABILITY,
 			UpgradePage::PAGE_SLUG,
 			array( $this->upgrade_page, 'render' )

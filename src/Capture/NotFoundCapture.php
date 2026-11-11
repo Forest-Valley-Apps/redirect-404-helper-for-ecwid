@@ -2,20 +2,20 @@
 /**
  * Server-side 404 capture.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Capture;
+namespace ForestValley\RedirectHelper\Capture;
 
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionState;
-use FV\WPEcwidRedirectHelper\Connection\EcwidPluginDiscovery;
-use FV\WPEcwidRedirectHelper\Log\NotFoundLog;
-use FV\WPEcwidRedirectHelper\Request\RequestPath;
-use FV\WPEcwidRedirectHelper\Url\RuleMatcher;
-use FV\WPEcwidRedirectHelper\Url\UrlClassifier;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Connection\ConnectionState;
+use ForestValley\RedirectHelper\Connection\EcwidPluginDiscovery;
+use ForestValley\RedirectHelper\Log\NotFoundLog;
+use ForestValley\RedirectHelper\Request\RequestPath;
+use ForestValley\RedirectHelper\Url\RuleMatcher;
+use ForestValley\RedirectHelper\Url\UrlClassifier;
 
 defined( 'ABSPATH' ) || exit;
 

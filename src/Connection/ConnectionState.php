@@ -2,12 +2,12 @@
 /**
  * Persisted connect/disconnect state for this plugin.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Connection;
+namespace ForestValley\RedirectHelper\Connection;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,7 +31,7 @@ final class ConnectionState {
 	 *
 	 * @var string
 	 */
-	public const OPTION = 'fv_erh_connection';
+	public const OPTION = 'fvrh404_connection';
 
 	/**
 	 * Mark the connection as active and record the verified store id.

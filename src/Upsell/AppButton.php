@@ -2,12 +2,12 @@
 /**
  * The persistent, branded "open the app" button each admin screen carries.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Upsell;
+namespace ForestValley\RedirectHelper\Upsell;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -71,7 +71,7 @@ final class AppButton {
 	 * @return string
 	 */
 	public static function logo_url(): string {
-		return plugins_url( 'assets/img/app-logo.svg', FV_ERH_PLUGIN_FILE );
+		return plugins_url( 'assets/img/app-logo.svg', FVRH404_PLUGIN_FILE );
 	}
 
 	/**
@@ -90,14 +90,14 @@ final class AppButton {
 		$deep_link = $this->deep_link();
 
 		$label = $deep_link->can_deep_link()
-			? __( 'Open in Redirect & 404 Manager', 'redirect-404-helper-for-ecwid' )
-			: __( 'Get the Redirect & 404 Manager app', 'redirect-404-helper-for-ecwid' );
+			? __( 'Open in Redirect & 404 Manager', 'forest-valley-redirect-404-helper-for-ecwid' )
+			: __( 'Get the Redirect & 404 Manager app', 'forest-valley-redirect-404-helper-for-ecwid' );
 
 		// The logo is decorative (the adjacent label names the destination), so its
 		// alt is empty; the ↗ marks a link that opens the app in a new tab.
 		printf(
-			'<a class="fv-erh-app-btn" href="%1$s" target="_blank" rel="noopener noreferrer">'
-				. '<img class="fv-erh-app-btn__logo" src="%2$s" alt="" width="20" height="10" />'
+			'<a class="fvrh404-app-btn" href="%1$s" target="_blank" rel="noopener noreferrer">'
+				. '<img class="fvrh404-app-btn__logo" src="%2$s" alt="" width="20" height="10" />'
 				. '<span>%3$s</span><span aria-hidden="true">↗</span></a>',
 			esc_url( $deep_link->url_for( $target ) ),
 			esc_url( self::logo_url() ),

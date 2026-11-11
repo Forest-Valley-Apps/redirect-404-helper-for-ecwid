@@ -2,14 +2,14 @@
 /**
  * Site-wide admin notice for slug collisions.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Collision;
+namespace ForestValley\RedirectHelper\Collision;
 
-use FV\WPEcwidRedirectHelper\Admin\LogPage;
+use ForestValley\RedirectHelper\Admin\LogPage;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -30,7 +30,7 @@ final class CollisionNotice {
 	 *
 	 * @var string
 	 */
-	public const ACTION_DISMISS = 'fv_erh_dismiss_collisions';
+	public const ACTION_DISMISS = 'fvrh404_dismiss_collisions';
 
 	/**
 	 * Required capability to see and dismiss the notice.
@@ -104,7 +104,7 @@ final class CollisionNotice {
 		);
 
 		echo '<div class="notice notice-warning"><p><strong>'
-			. esc_html__( 'Redirect & 404 Helper for Ecwid:', 'redirect-404-helper-for-ecwid' )
+			. esc_html__( 'Forest Valley Redirect & 404 Helper for Ecwid:', 'forest-valley-redirect-404-helper-for-ecwid' )
 			. '</strong> ';
 
 		printf(
@@ -114,7 +114,7 @@ final class CollisionNotice {
 					'%1$d published page has a slug ending in an Ecwid product/category pattern (%2$s). The Ecwid store widget hijacks such URLs and shows a "not found" store page instead of your content.',
 					'%1$d published pages have slugs ending in an Ecwid product/category pattern (%2$s). The Ecwid store widget hijacks such URLs and shows a "not found" store page instead of your content.',
 					count( $collisions ),
-					'redirect-404-helper-for-ecwid'
+					'forest-valley-redirect-404-helper-for-ecwid'
 				)
 			),
 			(int) count( $collisions ),
@@ -122,9 +122,9 @@ final class CollisionNotice {
 		);
 
 		echo ' <a href="' . esc_url( $dashboard_url ) . '">'
-			. esc_html__( 'Review the affected pages', 'redirect-404-helper-for-ecwid' )
+			. esc_html__( 'Review the affected pages', 'forest-valley-redirect-404-helper-for-ecwid' )
 			. '</a> | <a href="' . esc_url( $dismiss_url ) . '">'
-			. esc_html__( 'Dismiss', 'redirect-404-helper-for-ecwid' )
+			. esc_html__( 'Dismiss', 'forest-valley-redirect-404-helper-for-ecwid' )
 			. '</a></p></div>';
 	}
 
@@ -135,7 +135,7 @@ final class CollisionNotice {
 	 */
 	public function handle_dismiss(): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		check_admin_referer( self::ACTION_DISMISS );

@@ -2,12 +2,12 @@
 /**
  * Shared base for tests that need a mocked $wpdb.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit;
+namespace ForestValley\RedirectHelper\Tests\Unit;
 
 use Brain\Monkey;
 use Mockery;

@@ -2,17 +2,17 @@
 /**
  * Unit tests for the front-end manual-301 redirector.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Redirect;
+namespace ForestValley\RedirectHelper\Tests\Unit\Redirect;
 
 use Brain\Monkey\Actions;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Redirect\Redirector;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Redirect\Redirector;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 use RuntimeException;
 
 /**
@@ -62,7 +62,7 @@ final class RedirectorTest extends WpdbTestCase {
 	 * @return void
 	 */
 	private function connect( int $store_id = self::STORE_ID ): void {
-		$this->options['fv_erh_connection'] = array(
+		$this->options['fvrh404_connection'] = array(
 			'connected' => true,
 			'store_id'  => $store_id,
 		);
@@ -155,7 +155,7 @@ final class RedirectorTest extends WpdbTestCase {
 
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( '/new-page', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( '/new-page', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();
@@ -185,7 +185,7 @@ final class RedirectorTest extends WpdbTestCase {
 
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( '/blog/some-post', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( '/blog/some-post', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();
@@ -213,7 +213,7 @@ final class RedirectorTest extends WpdbTestCase {
 
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( '/blog/some-post', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( '/blog/some-post', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();
@@ -243,7 +243,7 @@ final class RedirectorTest extends WpdbTestCase {
 
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( '/shop/new-category/widget', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( '/shop/new-category/widget', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();
@@ -271,7 +271,7 @@ final class RedirectorTest extends WpdbTestCase {
 
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( 'https://example.com/cat/widget', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( 'https://example.com/cat/widget', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();
@@ -354,7 +354,7 @@ final class RedirectorTest extends WpdbTestCase {
 
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( '/b', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( '/b', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();
@@ -380,7 +380,7 @@ final class RedirectorTest extends WpdbTestCase {
 
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( 'https://example.com/landed', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( 'https://example.com/landed', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();
@@ -431,7 +431,7 @@ final class RedirectorTest extends WpdbTestCase {
 			);
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( '/new-page', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( '/new-page', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();
@@ -470,7 +470,7 @@ final class RedirectorTest extends WpdbTestCase {
 		Functions\expect( 'wp_remote_post' )->never();
 		Functions\expect( 'wp_redirect' )
 			->once()
-			->with( '/new-page', 301, 'Redirect & 404 Helper for Ecwid' );
+			->with( '/new-page', 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 
 		try {
 			$this->redirector()->maybe_redirect();

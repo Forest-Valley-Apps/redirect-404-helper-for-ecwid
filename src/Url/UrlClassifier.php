@@ -2,12 +2,12 @@
 /**
  * Ecwid URL classifier.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Url;
+namespace ForestValley\RedirectHelper\Url;
 
 defined( 'ABSPATH' ) || exit;
 

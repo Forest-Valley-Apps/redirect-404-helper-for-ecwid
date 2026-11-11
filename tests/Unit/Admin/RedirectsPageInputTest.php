@@ -2,16 +2,16 @@
 /**
  * Unit tests for the redirects admin form's input decoding.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Admin;
+namespace ForestValley\RedirectHelper\Tests\Unit\Admin;
 
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Admin\RedirectsPage;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Admin\RedirectsPage;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 use RuntimeException;
 
 /**

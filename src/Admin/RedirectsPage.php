@@ -2,20 +2,20 @@
 /**
  * Manual redirects admin page.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Admin;
+namespace ForestValley\RedirectHelper\Admin;
 
-use FV\WPEcwidRedirectHelper\Log\NotFoundLog;
-use FV\WPEcwidRedirectHelper\Redirect\RedirectStore;
-use FV\WPEcwidRedirectHelper\Request\RequestPath;
-use FV\WPEcwidRedirectHelper\Upsell\AppButton;
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
-use FV\WPEcwidRedirectHelper\Upsell\UpgradeCta;
-use FV\WPEcwidRedirectHelper\Url\RuleMatcher;
+use ForestValley\RedirectHelper\Log\NotFoundLog;
+use ForestValley\RedirectHelper\Redirect\RedirectStore;
+use ForestValley\RedirectHelper\Request\RequestPath;
+use ForestValley\RedirectHelper\Upsell\AppButton;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Upsell\UpgradeCta;
+use ForestValley\RedirectHelper\Url\RuleMatcher;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -37,7 +37,7 @@ final class RedirectsPage {
 	 *
 	 * @var string
 	 */
-	public const PAGE_SLUG = 'fv-erh-redirects';
+	public const PAGE_SLUG = 'fvrh404-redirects';
 
 	/**
 	 * Required capability for the page and all of its actions.
@@ -51,21 +51,21 @@ final class RedirectsPage {
 	 *
 	 * @var string
 	 */
-	public const ACTION_ADD = 'fv_erh_redirect_add';
+	public const ACTION_ADD = 'fvrh404_redirect_add';
 
 	/**
 	 * The admin-post action that enables/disables a rule.
 	 *
 	 * @var string
 	 */
-	public const ACTION_TOGGLE = 'fv_erh_redirect_toggle';
+	public const ACTION_TOGGLE = 'fvrh404_redirect_toggle';
 
 	/**
 	 * The admin-post action that deletes a single rule.
 	 *
 	 * @var string
 	 */
-	public const ACTION_DELETE = 'fv_erh_redirect_delete';
+	public const ACTION_DELETE = 'fvrh404_redirect_delete';
 
 	/**
 	 * Rule repository.
@@ -205,10 +205,10 @@ final class RedirectsPage {
 		}
 
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
-		check_admin_referer( 'bulk-fv-erh-redirects' );
+		check_admin_referer( 'bulk-fvrh404-redirects' );
 
 		$ids = isset( $_REQUEST['ids'] ) ? array_filter( array_map( 'absint', (array) $_REQUEST['ids'] ) ) : array();
 
@@ -216,7 +216,7 @@ final class RedirectsPage {
 			$this->store->delete( $ids );
 		}
 
-		wp_safe_redirect( add_query_arg( 'fv_erh_notice', 'deleted', $this->page_url() ) );
+		wp_safe_redirect( add_query_arg( 'fvrh404_notice', 'deleted', $this->page_url() ) );
 		exit;
 	}
 
@@ -227,11 +227,11 @@ final class RedirectsPage {
 	 */
 	public function render(): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to access this page.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		echo '<div class="wrap">';
-		echo '<h1 class="wp-heading-inline">' . esc_html__( 'Redirects', 'redirect-404-helper-for-ecwid' ) . '</h1>';
+		echo '<h1 class="wp-heading-inline">' . esc_html__( 'Redirects', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</h1>';
 
 		// The layer banner needs a deep-link builder for its "manage storefront"
 		// link; resolved once here (render-safe, cache-only).
@@ -268,15 +268,15 @@ final class RedirectsPage {
 	private function render_upgrade_cta(): void {
 		$this->cta->render(
 			'redirects-bulk-migration',
-			__( 'Migrating a store, or fixing many URLs at once?', 'redirect-404-helper-for-ecwid' ),
-			__( 'These redirects are added one at a time, by hand. The Redirect & 404 Manager app maps old URLs to new ones in bulk and imports a migration map from Shopify, WooCommerce, or BigCommerce — the same work, without the per-URL effort.', 'redirect-404-helper-for-ecwid' ),
+			__( 'Migrating a store, or fixing many URLs at once?', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			__( 'These redirects are added one at a time, by hand. The Redirect & 404 Manager app maps old URLs to new ones in bulk and imports a migration map from Shopify, WooCommerce, or BigCommerce — the same work, without the per-URL effort.', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			array(
 				array(
-					'label'  => __( 'Bulk-map URLs in the app', 'redirect-404-helper-for-ecwid' ),
+					'label'  => __( 'Bulk-map URLs in the app', 'forest-valley-redirect-404-helper-for-ecwid' ),
 					'target' => DeepLink::TARGET_BULK_MAPPING,
 				),
 				array(
-					'label'  => __( 'Import a migration', 'redirect-404-helper-for-ecwid' ),
+					'label'  => __( 'Import a migration', 'forest-valley-redirect-404-helper-for-ecwid' ),
 					'target' => DeepLink::TARGET_MIGRATION_IMPORT,
 				),
 			)
@@ -291,7 +291,7 @@ final class RedirectsPage {
 	 */
 	private function guard( string $action ): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		check_admin_referer( $action );
@@ -304,7 +304,7 @@ final class RedirectsPage {
 	 * @return void
 	 */
 	private function redirect_back( string $notice ): void {
-		wp_safe_redirect( add_query_arg( 'fv_erh_notice', $notice, $this->page_url() ) );
+		wp_safe_redirect( add_query_arg( 'fvrh404_notice', $notice, $this->page_url() ) );
 		exit;
 	}
 
@@ -331,16 +331,16 @@ final class RedirectsPage {
 	 */
 	private function render_scope_note( DeepLink $deep_link ): void {
 		printf(
-			'<div class="fv-erh-layer-banner">'
-				. '<img class="fv-erh-layer-banner__logo" src="%1$s" alt="" width="40" height="20" />'
-				. '<p class="fv-erh-layer-banner__text"><strong>%2$s</strong> %3$s '
+			'<div class="fvrh404-layer-banner">'
+				. '<img class="fvrh404-layer-banner__logo" src="%1$s" alt="" width="40" height="20" />'
+				. '<p class="fvrh404-layer-banner__text"><strong>%2$s</strong> %3$s '
 				. '<a href="%4$s" target="_blank" rel="noopener noreferrer">%5$s <span aria-hidden="true">↗</span></a></p>'
 				. '</div>',
 			esc_url( AppButton::logo_url() ),
-			esc_html__( 'These are WordPress-site redirects.', 'redirect-404-helper-for-ecwid' ),
-			esc_html__( 'Redirects inside your Ecwid storefront happen in the visitor\'s browser and never reach WordPress — manage those in the Redirect & 404 Manager app.', 'redirect-404-helper-for-ecwid' ),
+			esc_html__( 'These are WordPress-site redirects.', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			esc_html__( 'Redirects inside your Ecwid storefront happen in the visitor\'s browser and never reach WordPress — manage those in the Redirect & 404 Manager app.', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			esc_url( $deep_link->url_for( DeepLink::TARGET_STOREFRONT_LAYER ) ),
-			esc_html__( 'Open storefront redirects', 'redirect-404-helper-for-ecwid' )
+			esc_html__( 'Open storefront redirects', 'forest-valley-redirect-404-helper-for-ecwid' )
 		);
 	}
 
@@ -355,26 +355,26 @@ final class RedirectsPage {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$prefill = isset( $_GET['source'] ) ? sanitize_text_field( wp_unslash( $_GET['source'] ) ) : '';
 
-		echo '<h2>' . esc_html__( 'Add redirect', 'redirect-404-helper-for-ecwid' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Add redirect', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</h2>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		wp_nonce_field( self::ACTION_ADD );
 		echo '<input type="hidden" name="action" value="' . esc_attr( self::ACTION_ADD ) . '" />';
 
 		echo '<table class="form-table" role="presentation"><tbody>';
 
-		echo '<tr><th scope="row"><label for="fv_source">' . esc_html__( 'Source path', 'redirect-404-helper-for-ecwid' ) . '</label></th><td>';
+		echo '<tr><th scope="row"><label for="fv_source">' . esc_html__( 'Source path', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</label></th><td>';
 		echo '<input type="text" class="regular-text code" id="fv_source" name="fv_source" value="' . esc_attr( $prefill ) . '" placeholder="/old-page" required />';
-		echo '<p class="description">' . esc_html__( 'Wildcards: /old-blog/* forwards the matched part to a /new-blog/* destination; *-p123 matches any path ending in -p123.', 'redirect-404-helper-for-ecwid' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Wildcards: /old-blog/* forwards the matched part to a /new-blog/* destination; *-p123 matches any path ending in -p123.', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</p>';
 		echo '</td></tr>';
 
-		echo '<tr><th scope="row"><label for="fv_destination">' . esc_html__( 'Destination', 'redirect-404-helper-for-ecwid' ) . '</label></th><td>';
+		echo '<tr><th scope="row"><label for="fv_destination">' . esc_html__( 'Destination', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</label></th><td>';
 		echo '<input type="text" class="regular-text code" id="fv_destination" name="fv_destination" placeholder="/new-page" required />';
-		echo '<p class="description">' . esc_html__( 'A path on this site (/new-page) or a full URL (https://example.com/new-page).', 'redirect-404-helper-for-ecwid' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'A path on this site (/new-page) or a full URL (https://example.com/new-page).', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</p>';
 		echo '</td></tr>';
 
 		echo '</tbody></table>';
 
-		submit_button( __( 'Add redirect', 'redirect-404-helper-for-ecwid' ) );
+		submit_button( __( 'Add redirect', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		echo '</form>';
 	}
 
@@ -387,7 +387,7 @@ final class RedirectsPage {
 		// Display-only read of our own post/redirect/get marker; the originating
 		// action was already nonce-verified before this redirect was issued.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$code = isset( $_GET['fv_erh_notice'] ) ? sanitize_key( wp_unslash( $_GET['fv_erh_notice'] ) ) : '';
+		$code = isset( $_GET['fvrh404_notice'] ) ? sanitize_key( wp_unslash( $_GET['fvrh404_notice'] ) ) : '';
 		if ( '' === $code ) {
 			return;
 		}
@@ -413,19 +413,19 @@ final class RedirectsPage {
 	private function notice_message( string $code ): array {
 		switch ( $code ) {
 			case RedirectStore::ADDED:
-				return array( 'success', __( 'Redirect created. It will serve on the next request for the source URL.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'success', __( 'Redirect created. It will serve on the next request for the source URL.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case RedirectStore::INVALID_SOURCE:
-				return array( 'error', __( 'The source must be a path on this site, like /old-page or /old-section/*.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'error', __( 'The source must be a path on this site, like /old-page or /old-section/*.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case RedirectStore::INVALID_DESTINATION:
-				return array( 'error', __( 'The destination must be a path (/new-page) or a full http(s) URL, and must differ from the source.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'error', __( 'The destination must be a path (/new-page) or a full http(s) URL, and must differ from the source.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case RedirectStore::DUPLICATE:
-				return array( 'error', __( 'A redirect for this source already exists.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'error', __( 'A redirect for this source already exists.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'deleted':
-				return array( 'success', __( 'Redirect deleted.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'success', __( 'Redirect deleted.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'enabled':
-				return array( 'success', __( 'Redirect enabled.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'success', __( 'Redirect enabled.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'disabled':
-				return array( 'success', __( 'Redirect disabled.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'success', __( 'Redirect disabled.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			default:
 				return array( '', '' );
 		}

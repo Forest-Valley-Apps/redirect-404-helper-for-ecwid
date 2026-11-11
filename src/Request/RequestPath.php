@@ -2,14 +2,14 @@
 /**
  * Current-request path extraction.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Request;
+namespace ForestValley\RedirectHelper\Request;
 
-use FV\WPEcwidRedirectHelper\Url\RuleMatcher;
+use ForestValley\RedirectHelper\Url\RuleMatcher;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -2,12 +2,12 @@
 /**
  * Smoke tests for the uninstall teardown (uninstall.php).
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit;
+namespace ForestValley\RedirectHelper\Tests\Unit;
 
 use Brain\Monkey\Functions;
 
@@ -45,7 +45,7 @@ final class UninstallTest extends WpdbTestCase {
 	/**
 	 * Execute the uninstall routine exactly once for this test.
 	 *
-	 * uninstall.php guards on WP_UNINSTALL_PLUGIN and calls fv_erh_uninstall()
+	 * uninstall.php guards on WP_UNINSTALL_PLUGIN and calls fvrh404_uninstall()
 	 * at file scope, so the first require executes the teardown. Its functions
 	 * cannot be declared twice in one process, so once they exist later tests
 	 * invoke the entry point directly — either way the teardown runs once per
@@ -55,11 +55,11 @@ final class UninstallTest extends WpdbTestCase {
 	 */
 	private function run_uninstall(): void {
 		if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-			define( 'WP_UNINSTALL_PLUGIN', 'redirect-404-helper-for-ecwid/redirect-404-helper-for-ecwid.php' );
+			define( 'WP_UNINSTALL_PLUGIN', 'forest-valley-redirect-404-helper-for-ecwid/forest-valley-redirect-404-helper-for-ecwid.php' );
 		}
 
-		if ( \function_exists( 'fv_erh_uninstall' ) ) {
-			\fv_erh_uninstall();
+		if ( \function_exists( 'fvrh404_uninstall' ) ) {
+			\fvrh404_uninstall();
 
 			return;
 		}
@@ -77,14 +77,14 @@ final class UninstallTest extends WpdbTestCase {
 	private function assert_site_teardown_sql( string $prefix, string $options ): void {
 		$all_sql = implode( "\n", $this->queries );
 
-		$this->assertStringContainsString( "DROP TABLE IF EXISTS `{$prefix}fv_erh_404_log`", $all_sql );
-		$this->assertStringContainsString( "DROP TABLE IF EXISTS `{$prefix}fv_erh_redirects`", $all_sql );
+		$this->assertStringContainsString( "DROP TABLE IF EXISTS `{$prefix}fvrh404_404_log`", $all_sql );
+		$this->assertStringContainsString( "DROP TABLE IF EXISTS `{$prefix}fvrh404_redirects`", $all_sql );
 
-		// The transient sweep covers every fv_erh_ transient — value rows AND
+		// The transient sweep covers every fvrh404_ transient — value rows AND
 		// their `_transient_timeout_` counterparts — in this site's options table.
 		$this->assertStringContainsString( "DELETE FROM `{$options}`", $all_sql );
-		$this->assertStringContainsString( "LIKE '\_transient\_fv\_erh\_%'", $all_sql );
-		$this->assertStringContainsString( "LIKE '\_transient\_timeout\_fv\_erh\_%'", $all_sql );
+		$this->assertStringContainsString( "LIKE '\_transient\_fvrh404\_%'", $all_sql );
+		$this->assertStringContainsString( "LIKE '\_transient\_timeout\_fvrh404\_%'", $all_sql );
 	}
 
 	public function test_single_site_uninstall_removes_every_persistent_artifact(): void {
@@ -103,10 +103,10 @@ final class UninstallTest extends WpdbTestCase {
 
 		Functions\expect( 'wp_clear_scheduled_hook' )
 			->once()
-			->with( 'fv_erh_hourly_tasks' );
+			->with( 'fvrh404_hourly_tasks' );
 		Functions\expect( 'wp_clear_scheduled_hook' )
 			->once()
-			->with( 'fv_erh_collision_scan' );
+			->with( 'fvrh404_collision_scan' );
 
 		$this->run_uninstall();
 
@@ -115,10 +115,10 @@ final class UninstallTest extends WpdbTestCase {
 		// Every option the plugin ever writes, nothing else.
 		$this->assertSame(
 			array(
-				'fv_erh_connection',
-				'fv_erh_cta_dismissed',
-				'fv_erh_collision_dismissed',
-				'fv_erh_db_version',
+				'fvrh404_connection',
+				'fvrh404_cta_dismissed',
+				'fvrh404_collision_dismissed',
+				'fvrh404_db_version',
 			),
 			$deleted_options
 		);
@@ -157,10 +157,10 @@ final class UninstallTest extends WpdbTestCase {
 		Functions\expect( 'delete_option' )->times( 8 )->andReturn( true );
 		Functions\expect( 'wp_clear_scheduled_hook' )
 			->twice()
-			->with( 'fv_erh_hourly_tasks' );
+			->with( 'fvrh404_hourly_tasks' );
 		Functions\expect( 'wp_clear_scheduled_hook' )
 			->twice()
-			->with( 'fv_erh_collision_scan' );
+			->with( 'fvrh404_collision_scan' );
 
 		$this->run_uninstall();
 

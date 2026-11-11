@@ -8,18 +8,18 @@
  * source of truth, plus the false-404 collision cases this plugin must reason
  * about.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Url;
+namespace ForestValley\RedirectHelper\Tests\Unit\Url;
 
-use FV\WPEcwidRedirectHelper\Url\UrlClassifier;
+use ForestValley\RedirectHelper\Url\UrlClassifier;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FV\WPEcwidRedirectHelper\Url\UrlClassifier
+ * @covers \ForestValley\RedirectHelper\Url\UrlClassifier
  */
 final class UrlClassifierTest extends TestCase {
 

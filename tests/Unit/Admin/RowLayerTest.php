@@ -2,19 +2,19 @@
 /**
  * Unit tests for the 404-log layer derivation.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Admin;
+namespace ForestValley\RedirectHelper\Tests\Unit\Admin;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Admin\RowLayer;
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
-use FV\WPEcwidRedirectHelper\Url\UrlClassifier;
-use FV\WPEcwidRedirectHelper\Verdict\VerdictChecker;
+use ForestValley\RedirectHelper\Admin\RowLayer;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Url\UrlClassifier;
+use ForestValley\RedirectHelper\Verdict\VerdictChecker;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 

@@ -2,18 +2,18 @@
 /**
  * Front-end manual-301 redirector.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Redirect;
+namespace ForestValley\RedirectHelper\Redirect;
 
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionState;
-use FV\WPEcwidRedirectHelper\Connection\EcwidPluginDiscovery;
-use FV\WPEcwidRedirectHelper\Request\RequestPath;
-use FV\WPEcwidRedirectHelper\Url\RuleMatcher;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Connection\ConnectionState;
+use ForestValley\RedirectHelper\Connection\EcwidPluginDiscovery;
+use ForestValley\RedirectHelper\Request\RequestPath;
+use ForestValley\RedirectHelper\Url\RuleMatcher;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -157,7 +157,7 @@ final class Redirector {
 		// site-relative path or absolute http(s) URL) — external hosts are an
 		// intentional capability.
 		// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
-		wp_redirect( $destination, 301, 'Redirect & 404 Helper for Ecwid' );
+		wp_redirect( $destination, 301, 'Forest Valley Redirect & 404 Helper for Ecwid' );
 		( $this->terminator )();
 	}
 
@@ -170,7 +170,7 @@ final class Redirector {
 	 * it runs only after the rule has matched on a 404 render — never on a normal
 	 * request. A disconnected store, or one with no discoverable Ecwid store id,
 	 * is a silent no-op. Mirrors the capture-side reporting in
-	 * {@see \FV\WPEcwidRedirectHelper\Capture\NotFoundCapture}.
+	 * {@see \ForestValley\RedirectHelper\Capture\NotFoundCapture}.
 	 *
 	 * @param string $source_path The rule source that matched (the hit path).
 	 * @return void

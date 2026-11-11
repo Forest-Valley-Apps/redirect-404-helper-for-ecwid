@@ -2,16 +2,16 @@
 /**
  * Guard-contract tests for the 404 log page's mutation handlers.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Admin;
+namespace ForestValley\RedirectHelper\Tests\Unit\Admin;
 
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Admin\LogPage;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Admin\LogPage;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 use RuntimeException;
 
 /**
@@ -146,7 +146,7 @@ final class LogPageGuardsTest extends WpdbTestCase {
 		$_REQUEST['id']     = '5';
 
 		$this->expect_capability_check( true );
-		$this->expect_nonce_check( 'fv_erh_log_delete_5' );
+		$this->expect_nonce_check( 'fvrh404_log_delete_5' );
 
 		$page = new LogPage();
 		$this->assert_stopped_by(
@@ -162,7 +162,7 @@ final class LogPageGuardsTest extends WpdbTestCase {
 		$_REQUEST['ids']    = array( '5', '6' );
 
 		$this->expect_capability_check( true );
-		$this->expect_nonce_check( 'bulk-fv-erh-404s' );
+		$this->expect_nonce_check( 'bulk-fvrh404-404s' );
 
 		$page = new LogPage();
 		$this->assert_stopped_by(
@@ -177,7 +177,7 @@ final class LogPageGuardsTest extends WpdbTestCase {
 		$_REQUEST['action'] = 'check_catalog';
 
 		$this->expect_capability_check( true );
-		$this->expect_nonce_check( 'fv_erh_check_catalog' );
+		$this->expect_nonce_check( 'fvrh404_check_catalog' );
 
 		$page = new LogPage();
 		$this->assert_stopped_by(
@@ -192,7 +192,7 @@ final class LogPageGuardsTest extends WpdbTestCase {
 		$_REQUEST['action'] = 'rescan_collisions';
 
 		$this->expect_capability_check( true );
-		$this->expect_nonce_check( 'fv_erh_rescan_collisions' );
+		$this->expect_nonce_check( 'fvrh404_rescan_collisions' );
 
 		$page = new LogPage();
 		$this->assert_stopped_by(

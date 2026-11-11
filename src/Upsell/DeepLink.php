@@ -2,14 +2,14 @@
 /**
  * Builds deep-links into the hosted Redirect & 404 Manager app.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Upsell;
+namespace ForestValley\RedirectHelper\Upsell;
 
-use FV\WPEcwidRedirectHelper\Connection\EcwidPluginDiscovery;
+use ForestValley\RedirectHelper\Connection\EcwidPluginDiscovery;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -137,7 +137,7 @@ final class DeepLink {
 
 	/**
 	 * Generic fallback when no store id is known (cannot build a store-scoped
-	 * control-panel URL). Filterable via `fv_erh_app_market_url`.
+	 * control-panel URL). Filterable via `fvrh404_app_market_url`.
 	 *
 	 * @var string
 	 */
@@ -197,18 +197,18 @@ final class DeepLink {
 		/**
 		 * Filter the App Market slug. Defaults to the production slug; point at
 		 * the dev slug when testing against staging (alongside
-		 * `fv_erh_backend_base_url`).
+		 * `fvrh404_backend_base_url`).
 		 *
 		 * @param string $slug Default production slug.
 		 */
-		$slug = (string) apply_filters( 'fv_erh_paid_app_slug', self::SLUG_PROD );
+		$slug = (string) apply_filters( 'fvrh404_paid_app_slug', self::SLUG_PROD );
 
 		/**
 		 * Filter the generic App Market URL used when no store id is known.
 		 *
 		 * @param string $market_url Default generic listing URL.
 		 */
-		$market_url = (string) apply_filters( 'fv_erh_app_market_url', self::DEFAULT_MARKET_URL );
+		$market_url = (string) apply_filters( 'fvrh404_app_market_url', self::DEFAULT_MARKET_URL );
 
 		// Render-safe: cache-only, never blocks on the network.
 		$installed = $store_id > 0 ? AppInstallStatus::for_store( $store_id )->is_installed() : null;

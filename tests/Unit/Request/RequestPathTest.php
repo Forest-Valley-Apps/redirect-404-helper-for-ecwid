@@ -2,17 +2,17 @@
 /**
  * Unit tests for the current-request path extraction.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Request;
+namespace ForestValley\RedirectHelper\Tests\Unit\Request;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Request\RequestPath;
-use FV\WPEcwidRedirectHelper\Url\RuleMatcher;
+use ForestValley\RedirectHelper\Request\RequestPath;
+use ForestValley\RedirectHelper\Url\RuleMatcher;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 

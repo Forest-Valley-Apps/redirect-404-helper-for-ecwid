@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstall routine for Redirect & 404 Helper for Ecwid.
+ * Uninstall routine for Forest Valley Redirect & 404 Helper for Ecwid.
  *
  * Runs only when the user deletes the plugin from the Plugins screen. Removes
  * every persistent artifact the plugin created — its two tables, its options,
@@ -11,7 +11,7 @@
  * `ecwid_store_id` / `ecwid_public_token` options: the helper only ever reads
  * those, it does not own them.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 // Exit if not called by WordPress during plugin uninstall.
@@ -25,43 +25,43 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
  *
  * @return void
  */
-function fv_erh_uninstall_site() {
+function fvrh404_uninstall_site() {
 	global $wpdb;
 
 	// 1. Drop the plugin's tables. Identifiers cannot be bound via prepare(); the
 	// names are built from the trusted table prefix and hard-coded bases.
-	$log_table       = $wpdb->prefix . 'fv_erh_404_log';
-	$redirects_table = $wpdb->prefix . 'fv_erh_redirects';
+	$log_table       = $wpdb->prefix . 'fvrh404_404_log';
+	$redirects_table = $wpdb->prefix . 'fvrh404_redirects';
 	// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$wpdb->query( "DROP TABLE IF EXISTS `{$log_table}`" );
 	$wpdb->query( "DROP TABLE IF EXISTS `{$redirects_table}`" );
 
 	// 2. Delete the plugin's own options.
 	$options = array(
-		'fv_erh_connection',          // ConnectionState — store id/token + connect opt-in.
-		'fv_erh_cta_dismissed',       // UpgradeCta — dismissed in-context upgrade prompts.
-		'fv_erh_collision_dismissed', // CollisionScanner — dismissed collision set.
-		'fv_erh_db_version',          // Schema — installed DB schema version.
+		'fvrh404_connection',          // ConnectionState — store id/token + connect opt-in.
+		'fvrh404_cta_dismissed',       // UpgradeCta — dismissed in-context upgrade prompts.
+		'fvrh404_collision_dismissed', // CollisionScanner — dismissed collision set.
+		'fvrh404_db_version',          // Schema — installed DB schema version.
 	);
 	foreach ( $options as $option ) {
 		delete_option( $option );
 	}
 
 	// 3. Delete every transient the plugin created (single-key + per-store
-	// prefixes: fv_erh_collisions, fv_erh_rules_*, fv_erh_deleted_*,
-	// fv_erh_app_status_*). Covers both the value and timeout rows.
+	// prefixes: fvrh404_collisions, fvrh404_rules_*, fvrh404_deleted_*,
+	// fvrh404_app_status_*). Covers both the value and timeout rows.
 	$wpdb->query(
 		"DELETE FROM `{$wpdb->options}`
-		 WHERE option_name LIKE '\_transient\_fv\_erh\_%'
-		    OR option_name LIKE '\_transient\_timeout\_fv\_erh\_%'"
+		 WHERE option_name LIKE '\_transient\_fvrh404\_%'
+		    OR option_name LIKE '\_transient\_timeout\_fvrh404\_%'"
 	);
 	// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 	// 4. Unschedule the hourly verdict/collision task and any pending one-off
 	// collision scan. Deactivation clears both too, but a WP-CLI uninstall can
 	// run without the deactivation hook ever firing.
-	wp_clear_scheduled_hook( 'fv_erh_hourly_tasks' );
-	wp_clear_scheduled_hook( 'fv_erh_collision_scan' );
+	wp_clear_scheduled_hook( 'fvrh404_hourly_tasks' );
+	wp_clear_scheduled_hook( 'fvrh404_collision_scan' );
 }
 
 /**
@@ -72,7 +72,7 @@ function fv_erh_uninstall_site() {
  *
  * @return void
  */
-function fv_erh_uninstall() {
+function fvrh404_uninstall() {
 	if ( is_multisite() ) {
 		$site_ids = get_sites(
 			array(
@@ -82,12 +82,12 @@ function fv_erh_uninstall() {
 		);
 		foreach ( $site_ids as $site_id ) {
 			switch_to_blog( (int) $site_id );
-			fv_erh_uninstall_site();
+			fvrh404_uninstall_site();
 			restore_current_blog();
 		}
 	} else {
-		fv_erh_uninstall_site();
+		fvrh404_uninstall_site();
 	}
 }
 
-fv_erh_uninstall();
+fvrh404_uninstall();

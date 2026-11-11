@@ -2,8 +2,8 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Redirect & 404 Helper for Ecwid 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/redirect-404-helper-for-ecwid\n"
+"Project-Id-Version: Forest Valley Redirect & 404 Helper for Ecwid 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/forest-valley-redirect-404-helper-for-ecwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,33 +12,33 @@ msgstr ""
 "POT-Creation-Date: 2026-06-15T10:05:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: redirect-404-helper-for-ecwid\n"
+"X-Domain: forest-valley-redirect-404-helper-for-ecwid\n"
 
 #. Plugin Name of the plugin
-#: redirect-404-helper-for-ecwid.php
+#: forest-valley-redirect-404-helper-for-ecwid.php
 #: src/Admin/Menu.php:106
 #: src/Admin/Menu.php:134
 #: src/Admin/SettingsPage.php:108
-msgid "Redirect & 404 Helper for Ecwid"
+msgid "Forest Valley Redirect & 404 Helper for Ecwid"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: redirect-404-helper-for-ecwid.php
+#: forest-valley-redirect-404-helper-for-ecwid.php
 msgid "https://apps.fv.dev/redirect-404-manager/"
 msgstr ""
 
 #. Description of the plugin
-#: redirect-404-helper-for-ecwid.php
-msgid "Ecwid-aware 404 logging and redirects for WordPress — the only 404/redirect tool that understands Ecwid's embedded store URLs."
+#: forest-valley-redirect-404-helper-for-ecwid.php
+msgid "Finds, classifies, and helps fix 404s on WordPress sites with an embedded Ecwid store, with WordPress-layer 301 redirects."
 msgstr ""
 
 #. Author of the plugin
-#: redirect-404-helper-for-ecwid.php
+#: forest-valley-redirect-404-helper-for-ecwid.php
 msgid "Forest Valley"
 msgstr ""
 
 #. Author URI of the plugin
-#: redirect-404-helper-for-ecwid.php
+#: forest-valley-redirect-404-helper-for-ecwid.php
 msgid "https://apps.fv.dev/"
 msgstr ""
 
@@ -278,7 +278,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/Admin/LogPage.php:532
-msgid "These product and category 404s happen inside the embedded store, in the visitor's browser — they never reach WordPress, so a WordPress-layer redirect cannot catch them. The Redirect & 404 Manager app redirects them at the storefront layer, the only place these can be fixed."
+msgid "These product and category 404s happen inside the embedded store, in the visitor's browser — they never reach WordPress, so a WordPress-layer redirect cannot catch them. The Redirect & 404 Manager app redirects them at the storefront layer, where these URLs are handled."
 msgstr ""
 
 #: src/Admin/LogPage.php:535
@@ -597,7 +597,7 @@ msgid "Open storefront redirects"
 msgstr ""
 
 #: src/Collision/CollisionNotice.php:107
-msgid "Redirect & 404 Helper for Ecwid:"
+msgid "Forest Valley Redirect & 404 Helper for Ecwid:"
 msgstr ""
 
 #. translators: 1: number of pages, 2: example slugs.

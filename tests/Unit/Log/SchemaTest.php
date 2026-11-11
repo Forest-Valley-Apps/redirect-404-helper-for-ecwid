@@ -2,16 +2,16 @@
 /**
  * Unit tests for the database schema migrations.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Log;
+namespace ForestValley\RedirectHelper\Tests\Unit\Log;
 
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Log\Schema;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Log\Schema;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 
 /**
  * Covers the dbDelta migration and the version-gated re-run guard.
@@ -19,17 +19,17 @@ use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
 final class SchemaTest extends WpdbTestCase {
 
 	public function test_log_table_is_prefixed(): void {
-		$this->assertSame( 'wp_fv_erh_404_log', Schema::log_table() );
+		$this->assertSame( 'wp_fvrh404_404_log', Schema::log_table() );
 	}
 
 	public function test_redirects_table_is_prefixed(): void {
-		$this->assertSame( 'wp_fv_erh_redirects', Schema::redirects_table() );
+		$this->assertSame( 'wp_fvrh404_redirects', Schema::redirects_table() );
 	}
 
 	public function test_redirects_table_sql_defines_required_columns_and_keys(): void {
-		$sql = Schema::redirects_table_sql( 'wp_fv_erh_redirects', 'DEFAULT CHARACTER SET utf8mb4' );
+		$sql = Schema::redirects_table_sql( 'wp_fvrh404_redirects', 'DEFAULT CHARACTER SET utf8mb4' );
 
-		$this->assertStringContainsString( 'CREATE TABLE wp_fv_erh_redirects', $sql );
+		$this->assertStringContainsString( 'CREATE TABLE wp_fvrh404_redirects', $sql );
 		foreach ( array( 'source_hash', 'source', 'destination', 'is_wildcard', 'active', 'hit_count', 'last_hit', 'created_at' ) as $column ) {
 			$this->assertStringContainsString( $column, $sql );
 		}
@@ -39,9 +39,9 @@ final class SchemaTest extends WpdbTestCase {
 	}
 
 	public function test_log_table_sql_defines_required_columns_and_keys(): void {
-		$sql = Schema::log_table_sql( 'wp_fv_erh_404_log', 'DEFAULT CHARACTER SET utf8mb4' );
+		$sql = Schema::log_table_sql( 'wp_fvrh404_404_log', 'DEFAULT CHARACTER SET utf8mb4' );
 
-		$this->assertStringContainsString( 'CREATE TABLE wp_fv_erh_404_log', $sql );
+		$this->assertStringContainsString( 'CREATE TABLE wp_fvrh404_404_log', $sql );
 		foreach ( array( 'url_hash', 'url_path', 'referrer', 'classification', 'entity_id', 'status', 'verdict', 'verdict_checked_at', 'hit_count', 'first_seen', 'last_seen' ) as $column ) {
 			$this->assertStringContainsString( $column, $sql );
 		}
@@ -75,8 +75,8 @@ final class SchemaTest extends WpdbTestCase {
 		Schema::migrate();
 
 		$all_sql = implode( "\n", $created );
-		$this->assertStringContainsString( 'CREATE TABLE wp_fv_erh_404_log', $all_sql );
-		$this->assertStringContainsString( 'CREATE TABLE wp_fv_erh_redirects', $all_sql );
+		$this->assertStringContainsString( 'CREATE TABLE wp_fvrh404_404_log', $all_sql );
+		$this->assertStringContainsString( 'CREATE TABLE wp_fvrh404_redirects', $all_sql );
 	}
 
 	public function test_maybe_migrate_skips_when_schema_is_current(): void {

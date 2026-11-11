@@ -34,7 +34,7 @@ the wp-admin steps it prints. Then capture each screen at ~1200px wide (admin me
 included is fine — it reads as a real plugin in wp-admin):
 
 1. **`screenshot-1.png` — the 404 Log.**
-   `…/wp-admin/admin.php?page=fv-erh-404-log`
+   `…/wp-admin/admin.php?page=fvrh404-404-log`
    Shows every broken URL with the **Type**, **Fix at** (WordPress vs Storefront),
    and **Catalog** verdict columns. The staged set has WP-layer rows
    (*Create redirect*, some already *Redirected*) and storefront rows
@@ -47,7 +47,7 @@ included is fine — it reads as a real plugin in wp-admin):
    typo. This is the Ecwid-aware differentiator.
 
 3. **`screenshot-3.png` — the Redirects screen.**
-   `…/wp-admin/admin.php?page=fv-erh-redirects`
+   `…/wp-admin/admin.php?page=fvrh404-redirects`
    The three WordPress-layer 301s (including a `/products/* → /shop/*` wildcard)
    with hit counts, plus the honest "bulk/migration lives in the app" CTA.
 
@@ -60,10 +60,10 @@ a real *Deleted* verdict on wp.local:
 
 1. Plugins → deactivate **"FV ERH — staging backend override (wp.local only)"**
    (this falls the helper back to the prod default).
-2. Clear the stale ledger cache (transient `fv_erh_deleted_130416012`) — it is
+2. Clear the stale ledger cache (transient `fvrh404_deleted_130416012`) — it is
    keyed by store id, 1 h TTL, with no admin "clear" button; deactivating the
    override does not clear it. Simplest: wait out the hour, or temporarily edit
-   the override plugin to `delete_transient( 'fv_erh_deleted_130416012' );`.
+   the override plugin to `delete_transient( 'fvrh404_deleted_130416012' );`.
 3. Delete + re-seed the storefront rows, then **404 Log → Check catalog**: the
    prod-deleted ids (`823808971`, `823816367`, …) now resolve to **Deleted**.
 4. **Restore** the staging override afterward (it is the dev default).

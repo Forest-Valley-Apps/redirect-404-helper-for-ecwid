@@ -9,14 +9,14 @@
  * keys *without losing its existing rows*. This is the contract a unit test
  * structurally cannot cover.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Integration;
+namespace ForestValley\RedirectHelper\Tests\Integration;
 
-use FV\WPEcwidRedirectHelper\Log\Schema;
+use ForestValley\RedirectHelper\Log\Schema;
 use WP_UnitTestCase;
 
 /**
@@ -47,8 +47,8 @@ final class SchemaMigrationTest extends WP_UnitTestCase {
 		parent::set_up();
 
 		global $wpdb;
-		$this->log_table       = $wpdb->prefix . 'fv_erh_404_log';
-		$this->redirects_table = $wpdb->prefix . 'fv_erh_redirects';
+		$this->log_table       = $wpdb->prefix . 'fvrh404_404_log';
+		$this->redirects_table = $wpdb->prefix . 'fvrh404_redirects';
 
 		$this->drop_plugin_tables();
 		delete_option( Schema::VERSION_OPTION );

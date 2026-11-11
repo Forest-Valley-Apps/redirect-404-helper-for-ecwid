@@ -2,12 +2,12 @@
 /**
  * Redirect rule lookup + wildcard matching.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Url;
+namespace ForestValley\RedirectHelper\Url;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -258,7 +258,7 @@ final class RuleMatcher {
 	 *
 	 * Paths are compared in their (percent-)decoded form; this method does not
 	 * encode or decode — the decode happens at the seams that feed it
-	 * ({@see \FV\WPEcwidRedirectHelper\Request\RequestPath::decode()}: request
+	 * ({@see \ForestValley\RedirectHelper\Request\RequestPath::decode()}: request
 	 * extraction and the redirects admin form).
 	 *
 	 * @param string $path The raw path.

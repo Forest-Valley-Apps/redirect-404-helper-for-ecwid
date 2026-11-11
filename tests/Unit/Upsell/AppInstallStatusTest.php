@@ -2,17 +2,17 @@
 /**
  * Unit tests for the render-safe app-install resolver.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Upsell;
+namespace ForestValley\RedirectHelper\Tests\Unit\Upsell;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Upsell\AppInstallStatus;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Upsell\AppInstallStatus;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
@@ -26,8 +26,8 @@ final class AppInstallStatusTest extends TestCase {
 	use MockeryPHPUnitIntegration;
 
 	private const STORE       = 130416012;
-	private const STATUS_KEY  = 'fv_erh_app_status_130416012';
-	private const DELETED_KEY = 'fv_erh_deleted_130416012';
+	private const STATUS_KEY  = 'fvrh404_app_status_130416012';
+	private const DELETED_KEY = 'fvrh404_deleted_130416012';
 
 	/**
 	 * In-memory stand-in for the WordPress transient store.

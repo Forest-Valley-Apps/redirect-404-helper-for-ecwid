@@ -2,12 +2,12 @@
 /**
  * Manual redirects list table.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Admin;
+namespace ForestValley\RedirectHelper\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,8 +44,8 @@ final class RedirectListTable extends \WP_List_Table {
 	public function __construct( array $rules ) {
 		parent::__construct(
 			array(
-				'singular' => 'fv-erh-redirect',
-				'plural'   => 'fv-erh-redirects',
+				'singular' => 'fvrh404-redirect',
+				'plural'   => 'fvrh404-redirects',
 				'ajax'     => false,
 			)
 		);
@@ -61,11 +61,11 @@ final class RedirectListTable extends \WP_List_Table {
 	public function get_columns(): array {
 		return array(
 			'cb'          => '<input type="checkbox" />',
-			'source'      => __( 'Source', 'redirect-404-helper-for-ecwid' ),
-			'destination' => __( 'Destination', 'redirect-404-helper-for-ecwid' ),
-			'active'      => __( 'Status', 'redirect-404-helper-for-ecwid' ),
-			'hit_count'   => __( 'Hits', 'redirect-404-helper-for-ecwid' ),
-			'last_hit'    => __( 'Last used', 'redirect-404-helper-for-ecwid' ),
+			'source'      => __( 'Source', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			'destination' => __( 'Destination', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			'active'      => __( 'Status', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			'hit_count'   => __( 'Hits', 'forest-valley-redirect-404-helper-for-ecwid' ),
+			'last_hit'    => __( 'Last used', 'forest-valley-redirect-404-helper-for-ecwid' ),
 		);
 	}
 
@@ -76,7 +76,7 @@ final class RedirectListTable extends \WP_List_Table {
 	 */
 	protected function get_bulk_actions(): array {
 		return array(
-			'delete' => __( 'Delete', 'redirect-404-helper-for-ecwid' ),
+			'delete' => __( 'Delete', 'forest-valley-redirect-404-helper-for-ecwid' ),
 		);
 	}
 
@@ -106,7 +106,7 @@ final class RedirectListTable extends \WP_List_Table {
 	 * @return void
 	 */
 	public function no_items(): void {
-		esc_html_e( 'No redirects yet. Add one above, or create one from a logged 404.', 'redirect-404-helper-for-ecwid' );
+		esc_html_e( 'No redirects yet. Add one above, or create one from a logged 404.', 'forest-valley-redirect-404-helper-for-ecwid' );
 	}
 
 	/**
@@ -151,13 +151,13 @@ final class RedirectListTable extends \WP_List_Table {
 				'<a href="%s">%s</a>',
 				esc_url( $toggle_url ),
 				$active
-					? esc_html__( 'Disable', 'redirect-404-helper-for-ecwid' )
-					: esc_html__( 'Enable', 'redirect-404-helper-for-ecwid' )
+					? esc_html__( 'Disable', 'forest-valley-redirect-404-helper-for-ecwid' )
+					: esc_html__( 'Enable', 'forest-valley-redirect-404-helper-for-ecwid' )
 			),
 			'delete' => sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( $delete_url ),
-				esc_html__( 'Delete', 'redirect-404-helper-for-ecwid' )
+				esc_html__( 'Delete', 'forest-valley-redirect-404-helper-for-ecwid' )
 			),
 		);
 
@@ -182,8 +182,8 @@ final class RedirectListTable extends \WP_List_Table {
 	 */
 	protected function column_active( $item ): string {
 		return (int) $item['active'] > 0
-			? esc_html__( 'Active', 'redirect-404-helper-for-ecwid' )
-			: esc_html__( 'Disabled', 'redirect-404-helper-for-ecwid' );
+			? esc_html__( 'Active', 'forest-valley-redirect-404-helper-for-ecwid' )
+			: esc_html__( 'Disabled', 'forest-valley-redirect-404-helper-for-ecwid' );
 	}
 
 	/**

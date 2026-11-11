@@ -2,20 +2,20 @@
 /**
  * 404 log dashboard page.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Admin;
+namespace ForestValley\RedirectHelper\Admin;
 
-use FV\WPEcwidRedirectHelper\Collision\CollisionScanner;
-use FV\WPEcwidRedirectHelper\Log\CsvExporter;
-use FV\WPEcwidRedirectHelper\Log\NotFoundLog;
-use FV\WPEcwidRedirectHelper\Upsell\AppButton;
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
-use FV\WPEcwidRedirectHelper\Upsell\UpgradeCta;
-use FV\WPEcwidRedirectHelper\Verdict\VerdictChecker;
+use ForestValley\RedirectHelper\Collision\CollisionScanner;
+use ForestValley\RedirectHelper\Log\CsvExporter;
+use ForestValley\RedirectHelper\Log\NotFoundLog;
+use ForestValley\RedirectHelper\Upsell\AppButton;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Upsell\UpgradeCta;
+use ForestValley\RedirectHelper\Verdict\VerdictChecker;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,7 +33,7 @@ final class LogPage {
 	 *
 	 * @var string
 	 */
-	public const PAGE_SLUG = 'fv-erh-404-log';
+	public const PAGE_SLUG = 'fvrh404-404-log';
 
 	/**
 	 * Required capability for the page and all of its actions.
@@ -47,7 +47,7 @@ final class LogPage {
 	 *
 	 * @var string
 	 */
-	public const ACTION_EXPORT = 'fv_erh_export_csv';
+	public const ACTION_EXPORT = 'fvrh404_export_csv';
 
 	/**
 	 * Catalog lookups per "Check catalog" click.
@@ -120,7 +120,7 @@ final class LogPage {
 		}
 
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		$handlers[ $action ]();
@@ -137,10 +137,10 @@ final class LogPage {
 		$single_id = isset( $_REQUEST['id'] ) ? absint( $_REQUEST['id'] ) : 0;
 
 		if ( $single_id > 0 ) {
-			check_admin_referer( 'fv_erh_log_delete_' . $single_id );
+			check_admin_referer( 'fvrh404_log_delete_' . $single_id );
 			$ids = array( $single_id );
 		} else {
-			check_admin_referer( 'bulk-fv-erh-404s' );
+			check_admin_referer( 'bulk-fvrh404-404s' );
 			$ids = isset( $_REQUEST['ids'] ) ? array_map( 'absint', (array) $_REQUEST['ids'] ) : array();
 		}
 
@@ -150,7 +150,7 @@ final class LogPage {
 			$this->log->delete( $ids );
 		}
 
-		wp_safe_redirect( add_query_arg( 'fv_erh_notice', 'log-deleted', $this->page_url( true ) ) );
+		wp_safe_redirect( add_query_arg( 'fvrh404_notice', 'log-deleted', $this->page_url( true ) ) );
 		exit;
 	}
 
@@ -160,12 +160,12 @@ final class LogPage {
 	 * @return void
 	 */
 	private function handle_check_catalog(): void {
-		check_admin_referer( 'fv_erh_check_catalog' );
+		check_admin_referer( 'fvrh404_check_catalog' );
 
 		$checker = VerdictChecker::for_current_connection();
 
 		if ( null === $checker ) {
-			wp_safe_redirect( add_query_arg( 'fv_erh_notice', 'verdicts-unavailable', $this->page_url( true ) ) );
+			wp_safe_redirect( add_query_arg( 'fvrh404_notice', 'verdicts-unavailable', $this->page_url( true ) ) );
 			exit;
 		}
 
@@ -174,9 +174,9 @@ final class LogPage {
 		wp_safe_redirect(
 			add_query_arg(
 				array(
-					'fv_erh_notice'  => 'verdicts-checked',
-					'fv_erh_checked' => $result['checked'],
-					'fv_erh_left'    => $result['remaining'],
+					'fvrh404_notice'  => 'verdicts-checked',
+					'fvrh404_checked' => $result['checked'],
+					'fvrh404_left'    => $result['remaining'],
 				),
 				$this->page_url( true )
 			)
@@ -190,11 +190,11 @@ final class LogPage {
 	 * @return void
 	 */
 	private function handle_rescan_collisions(): void {
-		check_admin_referer( 'fv_erh_rescan_collisions' );
+		check_admin_referer( 'fvrh404_rescan_collisions' );
 
 		$this->collisions->get_collisions( true );
 
-		wp_safe_redirect( add_query_arg( 'fv_erh_notice', 'collisions-rescanned', $this->page_url( true ) ) );
+		wp_safe_redirect( add_query_arg( 'fvrh404_notice', 'collisions-rescanned', $this->page_url( true ) ) );
 		exit;
 	}
 
@@ -205,7 +205,7 @@ final class LogPage {
 	 */
 	public function handle_export(): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		check_admin_referer( self::ACTION_EXPORT );
@@ -233,7 +233,7 @@ final class LogPage {
 	 */
 	public function render(): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to access this page.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		$table = new LogListTable( $this->log, self::current_query_args() );
@@ -245,8 +245,8 @@ final class LogPage {
 		);
 
 		echo '<div class="wrap">';
-		echo '<h1 class="wp-heading-inline">' . esc_html__( '404 Log', 'redirect-404-helper-for-ecwid' ) . '</h1>';
-		echo ' <a href="' . esc_url( $export_url ) . '" class="page-title-action">' . esc_html__( 'Export CSV', 'redirect-404-helper-for-ecwid' ) . '</a>';
+		echo '<h1 class="wp-heading-inline">' . esc_html__( '404 Log', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</h1>';
+		echo ' <a href="' . esc_url( $export_url ) . '" class="page-title-action">' . esc_html__( 'Export CSV', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</a>';
 		$this->render_check_catalog_button();
 		( new AppButton() )->render( DeepLink::TARGET_HOME );
 		echo '<hr class="wp-header-end" />';
@@ -257,7 +257,7 @@ final class LogPage {
 
 		echo '<form method="get">';
 		echo '<input type="hidden" name="page" value="' . esc_attr( self::PAGE_SLUG ) . '" />';
-		$table->search_box( __( 'Search URLs', 'redirect-404-helper-for-ecwid' ), 'fv-erh-404' );
+		$table->search_box( __( 'Search URLs', 'forest-valley-redirect-404-helper-for-ecwid' ), 'fvrh404-404' );
 		$table->display();
 		echo '</form>';
 
@@ -306,7 +306,7 @@ final class LogPage {
 	/**
 	 * Nonce'd URL for one of this page's own actions.
 	 *
-	 * The nonce action is always `fv_erh_<action>`, matching what each
+	 * The nonce action is always `fvrh404_<action>`, matching what each
 	 * handler passes to `check_admin_referer()`.
 	 *
 	 * @param string $action Action name (e.g. 'check_catalog').
@@ -321,7 +321,7 @@ final class LogPage {
 				),
 				admin_url( 'admin.php' )
 			),
-			'fv_erh_' . $action
+			'fvrh404_' . $action
 		);
 	}
 
@@ -363,8 +363,8 @@ final class LogPage {
 
 		$label = $pending > 0
 			/* translators: %d: number of Ecwid entities awaiting a catalog check. */
-			? sprintf( __( 'Check catalog (%d)', 'redirect-404-helper-for-ecwid' ), $pending )
-			: __( 'Check catalog', 'redirect-404-helper-for-ecwid' );
+			? sprintf( __( 'Check catalog (%d)', 'forest-valley-redirect-404-helper-for-ecwid' ), $pending )
+			: __( 'Check catalog', 'forest-valley-redirect-404-helper-for-ecwid' );
 
 		echo ' <a href="' . esc_url( $url ) . '" class="page-title-action">' . esc_html( $label ) . '</a>';
 	}
@@ -388,32 +388,32 @@ final class LogPage {
 		if ( null === $collisions ) {
 			$this->collisions->schedule_scan();
 
-			echo '<p class="fv-erh-collision-allclear">'
-				. esc_html__( 'Slug check: scan pending — results appear after the next background run.', 'redirect-404-helper-for-ecwid' )
-				. ' <a href="' . esc_url( $rescan_url ) . '">' . esc_html__( 'Scan now', 'redirect-404-helper-for-ecwid' ) . '</a></p>';
+			echo '<p class="fvrh404-collision-allclear">'
+				. esc_html__( 'Slug check: scan pending — results appear after the next background run.', 'forest-valley-redirect-404-helper-for-ecwid' )
+				. ' <a href="' . esc_url( $rescan_url ) . '">' . esc_html__( 'Scan now', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</a></p>';
 
 			return;
 		}
 
 		if ( array() === $collisions ) {
-			echo '<p class="fv-erh-collision-allclear">'
-				. esc_html__( 'Slug check: no page slugs collide with Ecwid URL patterns.', 'redirect-404-helper-for-ecwid' )
-				. ' <a href="' . esc_url( $rescan_url ) . '">' . esc_html__( 'Rescan', 'redirect-404-helper-for-ecwid' ) . '</a></p>';
+			echo '<p class="fvrh404-collision-allclear">'
+				. esc_html__( 'Slug check: no page slugs collide with Ecwid URL patterns.', 'forest-valley-redirect-404-helper-for-ecwid' )
+				. ' <a href="' . esc_url( $rescan_url ) . '">' . esc_html__( 'Rescan', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</a></p>';
 
 			return;
 		}
 
-		echo '<div class="fv-erh-collision-panel">';
-		echo '<h2>' . esc_html__( 'False-404 warning: slug collisions with Ecwid', 'redirect-404-helper-for-ecwid' ) . '</h2>';
+		echo '<div class="fvrh404-collision-panel">';
+		echo '<h2>' . esc_html__( 'False-404 warning: slug collisions with Ecwid', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</h2>';
 		echo '<p>'
-			. esc_html__( 'These published pages have slugs ending in Ecwid\'s product/category URL pattern (-p123 / -c123). The Ecwid store widget hijacks such URLs and renders a "not found" store page instead of your content — visitors see a 404 even though the page exists. Rename the slug (e.g. add a word after the number) to fix it.', 'redirect-404-helper-for-ecwid' )
+			. esc_html__( 'These published pages have slugs ending in Ecwid\'s product/category URL pattern (-p123 / -c123). The Ecwid store widget hijacks such URLs and renders a "not found" store page instead of your content — visitors see a 404 even though the page exists. Rename the slug (e.g. add a word after the number) to fix it.', 'forest-valley-redirect-404-helper-for-ecwid' )
 			. '</p>';
 
-		echo '<table class="widefat striped fv-erh-collision-table"><thead><tr>'
-			. '<th>' . esc_html__( 'Page', 'redirect-404-helper-for-ecwid' ) . '</th>'
-			. '<th>' . esc_html__( 'Slug', 'redirect-404-helper-for-ecwid' ) . '</th>'
-			. '<th>' . esc_html__( 'Type', 'redirect-404-helper-for-ecwid' ) . '</th>'
-			. '<th>' . esc_html__( 'Actions', 'redirect-404-helper-for-ecwid' ) . '</th>'
+		echo '<table class="widefat striped fvrh404-collision-table"><thead><tr>'
+			. '<th>' . esc_html__( 'Page', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</th>'
+			. '<th>' . esc_html__( 'Slug', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</th>'
+			. '<th>' . esc_html__( 'Type', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</th>'
+			. '<th>' . esc_html__( 'Actions', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</th>'
 			. '</tr></thead><tbody>';
 
 		foreach ( $collisions as $collision ) {
@@ -426,17 +426,17 @@ final class LogPage {
 			echo '<td>' . esc_html( $collision['type'] ) . '</td>';
 			echo '<td>';
 			if ( is_string( $edit_link ) && '' !== $edit_link ) {
-				echo '<a href="' . esc_url( $edit_link ) . '">' . esc_html__( 'Edit slug', 'redirect-404-helper-for-ecwid' ) . '</a>';
+				echo '<a href="' . esc_url( $edit_link ) . '">' . esc_html__( 'Edit slug', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</a>';
 			}
 			if ( is_string( $view_link ) && '' !== $view_link ) {
-				echo ' | <a href="' . esc_url( $view_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'View', 'redirect-404-helper-for-ecwid' ) . '</a>';
+				echo ' | <a href="' . esc_url( $view_link ) . '" target="_blank" rel="noopener">' . esc_html__( 'View', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</a>';
 			}
 			echo '</td>';
 			echo '</tr>';
 		}
 
 		echo '</tbody></table>';
-		echo '<p><a href="' . esc_url( $rescan_url ) . '" class="button">' . esc_html__( 'Rescan now', 'redirect-404-helper-for-ecwid' ) . '</a></p>';
+		echo '<p><a href="' . esc_url( $rescan_url ) . '" class="button">' . esc_html__( 'Rescan now', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</a></p>';
 		echo '</div>';
 	}
 
@@ -504,14 +504,14 @@ final class LogPage {
 						'%d deleted product is still returning 404s',
 						'%d deleted products are still returning 404s',
 						$deleted_count,
-						'redirect-404-helper-for-ecwid'
+						'forest-valley-redirect-404-helper-for-ecwid'
 					),
 					$deleted_count
 				),
-				'body'    => __( 'These are products or categories you deleted. The Redirect & 404 Manager app redirects a deleted item automatically — to its parent category or your homepage — the moment it is removed, so you never hand-fix them.', 'redirect-404-helper-for-ecwid' ),
+				'body'    => __( 'These are products or categories you deleted. The Redirect & 404 Manager app redirects a deleted item automatically — to its parent category or your homepage — the moment it is removed, so you never hand-fix them.', 'forest-valley-redirect-404-helper-for-ecwid' ),
 				'actions' => array(
 					array(
-						'label'  => __( 'Automate deleted redirects', 'redirect-404-helper-for-ecwid' ),
+						'label'  => __( 'Automate deleted redirects', 'forest-valley-redirect-404-helper-for-ecwid' ),
 						'target' => DeepLink::TARGET_DELETED_REDIRECTS,
 					),
 				),
@@ -527,14 +527,14 @@ final class LogPage {
 						'You have %d storefront 404 WordPress cannot redirect',
 						'You have %d storefront 404s WordPress cannot redirect',
 						$storefront_count,
-						'redirect-404-helper-for-ecwid'
+						'forest-valley-redirect-404-helper-for-ecwid'
 					),
 					$storefront_count
 				),
-				'body'    => __( 'These product and category 404s happen inside the embedded store, in the visitor\'s browser — they never reach WordPress, so a WordPress-layer redirect cannot catch them. The Redirect & 404 Manager app redirects them at the storefront layer, the only place these can be fixed.', 'redirect-404-helper-for-ecwid' ),
+				'body'    => __( 'These product and category 404s happen inside the embedded store, in the visitor\'s browser — they never reach WordPress, so a WordPress-layer redirect cannot catch them. The Redirect & 404 Manager app redirects them at the storefront layer, where these URLs are handled.', 'forest-valley-redirect-404-helper-for-ecwid' ),
 				'actions' => array(
 					array(
-						'label'  => __( 'Open them in the app', 'redirect-404-helper-for-ecwid' ),
+						'label'  => __( 'Open them in the app', 'forest-valley-redirect-404-helper-for-ecwid' ),
 						'target' => DeepLink::TARGET_WP_REPORTED_404S,
 					),
 				),
@@ -553,22 +553,22 @@ final class LogPage {
 		// Display-only read of our own post/redirect/get marker; the originating
 		// action was already nonce-verified before this redirect was issued.
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$code = isset( $_GET['fv_erh_notice'] ) ? sanitize_key( wp_unslash( $_GET['fv_erh_notice'] ) ) : '';
+		$code = isset( $_GET['fvrh404_notice'] ) ? sanitize_key( wp_unslash( $_GET['fvrh404_notice'] ) ) : '';
 
 		switch ( $code ) {
 			case 'log-deleted':
-				$this->print_notice( 'success', __( 'Selected 404 entries deleted.', 'redirect-404-helper-for-ecwid' ) );
+				$this->print_notice( 'success', __( 'Selected 404 entries deleted.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 				break;
 
 			case 'verdicts-checked':
-				$checked = isset( $_GET['fv_erh_checked'] ) ? absint( $_GET['fv_erh_checked'] ) : 0;
-				$left    = isset( $_GET['fv_erh_left'] ) ? absint( $_GET['fv_erh_left'] ) : 0;
+				$checked = isset( $_GET['fvrh404_checked'] ) ? absint( $_GET['fvrh404_checked'] ) : 0;
+				$left    = isset( $_GET['fvrh404_left'] ) ? absint( $_GET['fvrh404_left'] ) : 0;
 
 				$this->print_notice(
 					'success',
 					sprintf(
 						/* translators: 1: entities checked this run, 2: entities still pending. */
-						__( 'Catalog check complete: %1$d entities checked, %2$d still pending.', 'redirect-404-helper-for-ecwid' ),
+						__( 'Catalog check complete: %1$d entities checked, %2$d still pending.', 'forest-valley-redirect-404-helper-for-ecwid' ),
 						$checked,
 						$left
 					)
@@ -576,11 +576,11 @@ final class LogPage {
 				break;
 
 			case 'verdicts-unavailable':
-				$this->print_notice( 'warning', __( 'Catalog check unavailable: connect your Ecwid store first (Settings).', 'redirect-404-helper-for-ecwid' ) );
+				$this->print_notice( 'warning', __( 'Catalog check unavailable: connect your Ecwid store first (Settings).', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 				break;
 
 			case 'collisions-rescanned':
-				$this->print_notice( 'success', __( 'Slug collision scan refreshed.', 'redirect-404-helper-for-ecwid' ) );
+				$this->print_notice( 'success', __( 'Slug collision scan refreshed.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 				break;
 		}
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended

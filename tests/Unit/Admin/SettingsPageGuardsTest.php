@@ -2,16 +2,16 @@
 /**
  * Guard-contract tests for the settings page's connection actions.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Admin;
+namespace ForestValley\RedirectHelper\Tests\Unit\Admin;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Admin\SettingsPage;
+use ForestValley\RedirectHelper\Admin\SettingsPage;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
@@ -123,7 +123,7 @@ final class SettingsPageGuardsTest extends TestCase {
 
 	public function test_connect_verifies_its_own_nonce(): void {
 		$this->expect_capability_check( true );
-		$this->expect_nonce_check( 'fv_erh_connect' );
+		$this->expect_nonce_check( 'fvrh404_connect' );
 
 		$page = new SettingsPage();
 		$this->assert_stopped_by(
@@ -150,7 +150,7 @@ final class SettingsPageGuardsTest extends TestCase {
 
 	public function test_refresh_verifies_its_own_nonce(): void {
 		$this->expect_capability_check( true );
-		$this->expect_nonce_check( 'fv_erh_refresh' );
+		$this->expect_nonce_check( 'fvrh404_refresh' );
 
 		$page = new SettingsPage();
 		$this->assert_stopped_by(
@@ -177,7 +177,7 @@ final class SettingsPageGuardsTest extends TestCase {
 
 	public function test_disconnect_verifies_its_own_nonce(): void {
 		$this->expect_capability_check( true );
-		$this->expect_nonce_check( 'fv_erh_disconnect' );
+		$this->expect_nonce_check( 'fvrh404_disconnect' );
 
 		$page = new SettingsPage();
 		$this->assert_stopped_by(

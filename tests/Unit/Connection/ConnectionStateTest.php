@@ -2,16 +2,16 @@
 /**
  * Unit tests for the persisted connection state.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Connection;
+namespace ForestValley\RedirectHelper\Tests\Unit\Connection;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionState;
+use ForestValley\RedirectHelper\Connection\ConnectionState;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 

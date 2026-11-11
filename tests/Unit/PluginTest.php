@@ -2,18 +2,18 @@
 /**
  * Unit tests for the Plugin bootstrap class.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit;
+namespace ForestValley\RedirectHelper\Tests\Unit;
 
 use Brain\Monkey;
 use Brain\Monkey\Actions;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Log\Schema;
-use FV\WPEcwidRedirectHelper\Plugin;
+use ForestValley\RedirectHelper\Log\Schema;
+use ForestValley\RedirectHelper\Plugin;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
@@ -52,19 +52,19 @@ final class PluginTest extends TestCase {
 
 		Actions\expectAdded( 'admin_menu' )->once();
 		Actions\expectAdded( 'admin_enqueue_scripts' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_connect' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_refresh' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_disconnect' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_export_csv' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_redirect_add' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_redirect_toggle' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_redirect_delete' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_dismiss_collisions' )->once();
-		Actions\expectAdded( 'admin_post_fv_erh_dismiss_cta' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_connect' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_refresh' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_disconnect' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_export_csv' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_redirect_add' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_redirect_toggle' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_redirect_delete' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_dismiss_collisions' )->once();
+		Actions\expectAdded( 'admin_post_fvrh404_dismiss_cta' )->once();
 		Actions\expectAdded( 'admin_notices' )->once();
-		Actions\expectAdded( 'fv_erh_hourly_tasks' )->once();
+		Actions\expectAdded( 'fvrh404_hourly_tasks' )->once();
 		Actions\expectAdded( 'save_post' )->once();
-		Actions\expectAdded( 'fv_erh_collision_scan' )->once();
+		Actions\expectAdded( 'fvrh404_collision_scan' )->once();
 		Actions\expectAdded( 'template_redirect' )->never();
 
 		Plugin::instance()->register();
@@ -75,15 +75,15 @@ final class PluginTest extends TestCase {
 
 		Actions\expectAdded( 'admin_menu' )->never();
 		Actions\expectAdded( 'admin_enqueue_scripts' )->never();
-		Actions\expectAdded( 'admin_post_fv_erh_connect' )->never();
-		Actions\expectAdded( 'admin_post_fv_erh_refresh' )->never();
-		Actions\expectAdded( 'admin_post_fv_erh_disconnect' )->never();
+		Actions\expectAdded( 'admin_post_fvrh404_connect' )->never();
+		Actions\expectAdded( 'admin_post_fvrh404_refresh' )->never();
+		Actions\expectAdded( 'admin_post_fvrh404_disconnect' )->never();
 		Actions\expectAdded( 'admin_notices' )->never();
 		// The cron callbacks and the collision hooks must exist on every
 		// request type.
-		Actions\expectAdded( 'fv_erh_hourly_tasks' )->once();
+		Actions\expectAdded( 'fvrh404_hourly_tasks' )->once();
 		Actions\expectAdded( 'save_post' )->once();
-		Actions\expectAdded( 'fv_erh_collision_scan' )->once();
+		Actions\expectAdded( 'fvrh404_collision_scan' )->once();
 		// Once for the manual-301 redirector, once for the 404 capture.
 		Actions\expectAdded( 'template_redirect' )->twice();
 
@@ -104,7 +104,7 @@ final class PluginTest extends TestCase {
 		Functions\expect( 'wp_next_scheduled' )->once()->andReturn( false );
 		Functions\expect( 'wp_schedule_event' )
 			->once()
-			->with( Mockery::type( 'int' ), 'hourly', 'fv_erh_hourly_tasks' );
+			->with( Mockery::type( 'int' ), 'hourly', 'fvrh404_hourly_tasks' );
 
 		Plugin::activate();
 
@@ -114,10 +114,10 @@ final class PluginTest extends TestCase {
 	public function test_deactivate_clears_the_cron_events(): void {
 		Functions\expect( 'wp_clear_scheduled_hook' )
 			->once()
-			->with( 'fv_erh_hourly_tasks' );
+			->with( 'fvrh404_hourly_tasks' );
 		Functions\expect( 'wp_clear_scheduled_hook' )
 			->once()
-			->with( 'fv_erh_collision_scan' );
+			->with( 'fvrh404_collision_scan' );
 
 		Plugin::deactivate();
 	}

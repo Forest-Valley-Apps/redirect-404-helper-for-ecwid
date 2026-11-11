@@ -8,7 +8,7 @@
  * Composer's PSR-4 autoloader, so the full plugin does not need to boot; the
  * tests call the migration entry points directly.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
@@ -27,7 +27,7 @@ if ( ! file_exists( $_functions ) ) {
 	exit( 1 );
 }
 
-// Plugin classes (FV\WPEcwidRedirectHelper\*) via Composer PSR-4.
+// Plugin classes (ForestValley\RedirectHelper\*) via Composer PSR-4.
 require_once dirname( __DIR__, 2 ) . '/vendor/autoload.php';
 
 // Give access to tests_add_filter() before the test bootstrap runs.

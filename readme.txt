@@ -1,4 +1,4 @@
-=== Redirect & 404 Helper for Ecwid ===
+=== Forest Valley Redirect & 404 Helper for Ecwid ===
 Contributors: alexfv
 Tags: ecwid, 404, redirect, broken links, seo
 Requires at least: 6.0
@@ -8,11 +8,11 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-The only WordPress 404/redirect tool that understands Ecwid's embedded store URLs.
+Finds, classifies, and helps fix 404s on WordPress sites with an embedded Ecwid store.
 
 == Description ==
 
-Redirect & 404 Helper for Ecwid finds, explains, and helps you fix 404 errors on
+Forest Valley Redirect & 404 Helper for Ecwid finds, explains, and helps you fix 404 errors on
 WordPress sites running an embedded Ecwid store.
 
 When your site embeds an Ecwid store, broken URLs come in two flavors that look
@@ -23,10 +23,10 @@ identical to a visitor but need completely different fixes:
   (`/store/some-product-p123456789`) that no longer resolves, because the item was
   deleted, renamed, or the link was wrong from the start.
 
-Ecwid store pages are rendered by JavaScript inside a single WordPress page, so a
-generic redirect plugin (Redirection, Yoast, Rank Math) only ever sees the first
-kind — it cannot tell a dead product from a typo, or redirect store sub-routes at
-all. This plugin is Ecwid-aware.
+Ecwid store pages are rendered by JavaScript inside a single WordPress page, so
+store product and category URLs never reach WordPress as separate pages. This
+plugin understands Ecwid store URLs: it tells the two kinds apart, and tells a
+deleted product from a mistyped link.
 
 = What it does (free) =
 
@@ -64,9 +64,15 @@ redirects), the plugin points you to its paid companion, the **Redirect & 404
 Manager** app, which runs inside your Ecwid admin. The prompts are dismissible and
 stay dismissed; the plugin never changes your store.
 
+= Not affiliated with Ecwid =
+
+This is an independent plugin by Forest Valley. It is not affiliated with, endorsed
+by, or sponsored by Ecwid or Lightspeed. "Ecwid" is a trademark of its owner and is
+used here only to describe compatibility.
+
 == Installation ==
 
-1. In wp-admin, go to **Plugins → Add New** and search for "Redirect & 404 Helper
+1. In wp-admin, go to **Plugins → Add New** and search for "Forest Valley Redirect & 404 Helper
    for Ecwid", or upload the plugin zip via **Upload Plugin**.
 2. Click **Install Now**, then **Activate**.
 3. Make sure the official **Ecwid Shopping Cart** plugin is installed and connected
@@ -174,4 +180,4 @@ store.
 == Upgrade Notice ==
 
 = 1.0.0 =
-First public release of Redirect & 404 Helper for Ecwid.
+First public release of Forest Valley Redirect & 404 Helper for Ecwid.

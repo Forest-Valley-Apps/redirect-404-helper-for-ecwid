@@ -2,17 +2,17 @@
 /**
  * Unit tests for the false-404 slug collision scanner.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Collision;
+namespace ForestValley\RedirectHelper\Tests\Unit\Collision;
 
 use Brain\Monkey\Actions;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Collision\CollisionScanner;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Collision\CollisionScanner;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 use Mockery;
 
 /**

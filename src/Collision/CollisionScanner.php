@@ -2,12 +2,12 @@
 /**
  * False-404 slug collision scanner.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Collision;
+namespace ForestValley\RedirectHelper\Collision;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -41,21 +41,21 @@ final class CollisionScanner {
 	 *
 	 * @var string
 	 */
-	public const TRANSIENT = 'fv_erh_collisions';
+	public const TRANSIENT = 'fvrh404_collisions';
 
 	/**
 	 * Option holding the fingerprint of the dismissed collision set.
 	 *
 	 * @var string
 	 */
-	public const DISMISSED_OPTION = 'fv_erh_collision_dismissed';
+	public const DISMISSED_OPTION = 'fvrh404_collision_dismissed';
 
 	/**
 	 * One-off cron event for a deferred background scan.
 	 *
 	 * @var string
 	 */
-	public const SCAN_EVENT = 'fv_erh_collision_scan';
+	public const SCAN_EVENT = 'fvrh404_collision_scan';
 
 	/**
 	 * How long, in seconds, a scan result is cached.
@@ -92,7 +92,7 @@ final class CollisionScanner {
 	 *
 	 * Both must exist on every request type — slug saves happen via wp-admin
 	 * AND the REST API (Gutenberg), and the deferred-scan event fires on cron
-	 * requests — so {@see \FV\WPEcwidRedirectHelper\Plugin::register()} calls
+	 * requests — so {@see \ForestValley\RedirectHelper\Plugin::register()} calls
 	 * this unconditionally.
 	 *
 	 * @return void

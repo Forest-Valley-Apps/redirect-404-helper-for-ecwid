@@ -2,14 +2,14 @@
 /**
  * Repository for captured 404s.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Log;
+namespace ForestValley\RedirectHelper\Log;
 
-use FV\WPEcwidRedirectHelper\Url\UrlClassifier;
+use ForestValley\RedirectHelper\Url\UrlClassifier;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -86,11 +86,11 @@ final class NotFoundLog {
 	 *
 	 * A transient (not an option) on purpose: the value is re-derivable from
 	 * a real `COUNT(*)` whenever it is missing, expired or evicted, and the
-	 * uninstall routine's `fv_erh_` transient sweep cleans it up for free.
+	 * uninstall routine's `fvrh404_` transient sweep cleans it up for free.
 	 *
 	 * @var string
 	 */
-	private const COUNT_TRANSIENT = 'fv_erh_404_log_count';
+	private const COUNT_TRANSIENT = 'fvrh404_404_log_count';
 
 	/**
 	 * How long the approximate row count is trusted before a re-seed.
@@ -503,7 +503,7 @@ final class NotFoundLog {
 		 *
 		 * @param int $max_rows Default cap (10000).
 		 */
-		$max = max( 100, (int) apply_filters( 'fv_erh_404_log_max_rows', self::DEFAULT_MAX_ROWS ) );
+		$max = max( 100, (int) apply_filters( 'fvrh404_404_log_max_rows', self::DEFAULT_MAX_ROWS ) );
 
 		$table  = Schema::log_table();
 		$approx = get_transient( self::COUNT_TRANSIENT );

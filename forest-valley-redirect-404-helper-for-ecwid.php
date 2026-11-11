@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:       Redirect & 404 Helper for Ecwid
+ * Plugin Name:       Forest Valley Redirect & 404 Helper for Ecwid
  * Plugin URI:        https://apps.fv.dev/redirect-404-manager/
- * Description:       Ecwid-aware 404 logging and redirects for WordPress — the only 404/redirect tool that understands Ecwid's embedded store URLs.
+ * Description:       Finds, classifies, and helps fix 404s on WordPress sites with an embedded Ecwid store, with WordPress-layer 301 redirects.
  * Version:           1.0.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
@@ -10,21 +10,21 @@
  * Author URI:        https://apps.fv.dev/
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       redirect-404-helper-for-ecwid
+ * Text Domain:       forest-valley-redirect-404-helper-for-ecwid
  * Domain Path:       /languages
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper;
+namespace ForestValley\RedirectHelper;
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'FV_ERH_VERSION', '1.0.0' );
-define( 'FV_ERH_PLUGIN_FILE', __FILE__ );
-define( 'FV_ERH_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'FVRH404_VERSION', '1.0.0' );
+define( 'FVRH404_PLUGIN_FILE', __FILE__ );
+define( 'FVRH404_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
  * PSR-4 autoloader for the plugin's own classes.
@@ -38,7 +38,7 @@ define( 'FV_ERH_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
  */
 spl_autoload_register(
 	static function ( string $class_name ): void {
-		$prefix = 'FV\\WPEcwidRedirectHelper\\';
+		$prefix = 'ForestValley\\RedirectHelper\\';
 		$length = strlen( $prefix );
 
 		if ( 0 !== strncmp( $prefix, $class_name, $length ) ) {

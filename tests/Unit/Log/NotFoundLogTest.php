@@ -2,16 +2,16 @@
 /**
  * Unit tests for the 404 log repository.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Log;
+namespace ForestValley\RedirectHelper\Tests\Unit\Log;
 
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Log\NotFoundLog;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Log\NotFoundLog;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 use Mockery;
 
 /**
@@ -31,7 +31,7 @@ final class NotFoundLogTest extends WpdbTestCase {
 		$this->assertCount( 1, $this->prepared );
 
 		$sql = $this->prepared[0]['sql'];
-		$this->assertStringContainsString( 'INSERT INTO wp_fv_erh_404_log', $sql );
+		$this->assertStringContainsString( 'INSERT INTO wp_fvrh404_404_log', $sql );
 		$this->assertStringContainsString( 'ON DUPLICATE KEY UPDATE', $sql );
 		$this->assertStringContainsString( 'hit_count = hit_count + 1', $sql );
 		// A re-404ing path is by definition not redirected any more (the
@@ -75,8 +75,8 @@ final class NotFoundLogTest extends WpdbTestCase {
 		// The cached counter answers the cap check — no COUNT(*) scan at all.
 		$this->wpdb->shouldReceive( 'get_var' )->never();
 
-		Functions\expect( 'get_transient' )->once()->with( 'fv_erh_404_log_count' )->andReturn( 50 );
-		Functions\expect( 'set_transient' )->once()->with( 'fv_erh_404_log_count', 51, DAY_IN_SECONDS );
+		Functions\expect( 'get_transient' )->once()->with( 'fvrh404_404_log_count' )->andReturn( 50 );
+		Functions\expect( 'set_transient' )->once()->with( 'fvrh404_404_log_count', 51, DAY_IN_SECONDS );
 
 		( new NotFoundLog() )->record( '/gone', '', 'wp-page', 0 );
 
@@ -91,7 +91,7 @@ final class NotFoundLogTest extends WpdbTestCase {
 			->with(
 				Mockery::on(
 					static function ( $sql ): bool {
-						return false !== strpos( $sql, 'SELECT COUNT(*) FROM wp_fv_erh_404_log' );
+						return false !== strpos( $sql, 'SELECT COUNT(*) FROM wp_fvrh404_404_log' );
 					}
 				)
 			)
@@ -99,7 +99,7 @@ final class NotFoundLogTest extends WpdbTestCase {
 
 		Functions\expect( 'get_transient' )->once()->andReturn( false );
 		// The COUNT already includes the row just inserted — stored as-is.
-		Functions\expect( 'set_transient' )->once()->with( 'fv_erh_404_log_count', 50, DAY_IN_SECONDS );
+		Functions\expect( 'set_transient' )->once()->with( 'fvrh404_404_log_count', 50, DAY_IN_SECONDS );
 
 		( new NotFoundLog() )->record( '/gone', '', 'wp-page', 0 );
 
@@ -116,14 +116,14 @@ final class NotFoundLogTest extends WpdbTestCase {
 
 		Functions\expect( 'get_transient' )->once()->andReturn( 10000 );
 		// Over-deleted down to cap minus slack (9900), and the counter follows.
-		Functions\expect( 'set_transient' )->once()->with( 'fv_erh_404_log_count', 9900, DAY_IN_SECONDS );
+		Functions\expect( 'set_transient' )->once()->with( 'fvrh404_404_log_count', 9900, DAY_IN_SECONDS );
 
 		( new NotFoundLog() )->record( '/gone', '', 'product', 123 );
 
 		$this->assertCount( 2, $this->prepared );
 
 		$delete = $this->prepared[1];
-		$this->assertStringContainsString( 'DELETE FROM wp_fv_erh_404_log', $delete['sql'] );
+		$this->assertStringContainsString( 'DELETE FROM wp_fvrh404_404_log', $delete['sql'] );
 		$this->assertStringContainsString( 'ORDER BY last_seen ASC', $delete['sql'] );
 		// 10005 real rows pruned down to the 9900 target.
 		$this->assertSame( array( 105 ), $delete['args'] );
@@ -135,7 +135,7 @@ final class NotFoundLogTest extends WpdbTestCase {
 		$this->wpdb->shouldReceive( 'get_var' )->once()->andReturn( '9000' );
 
 		Functions\expect( 'get_transient' )->once()->andReturn( 10000 );
-		Functions\expect( 'set_transient' )->once()->with( 'fv_erh_404_log_count', 9000, DAY_IN_SECONDS );
+		Functions\expect( 'set_transient' )->once()->with( 'fvrh404_404_log_count', 9000, DAY_IN_SECONDS );
 
 		( new NotFoundLog() )->record( '/gone', '', 'wp-page', 0 );
 
@@ -189,7 +189,7 @@ final class NotFoundLogTest extends WpdbTestCase {
 	public function test_count_without_filters_skips_prepare(): void {
 		$this->wpdb->shouldReceive( 'get_var' )
 			->once()
-			->with( Mockery::pattern( '/^SELECT COUNT\(\*\) FROM wp_fv_erh_404_log\s*$/' ) )
+			->with( Mockery::pattern( '/^SELECT COUNT\(\*\) FROM wp_fvrh404_404_log\s*$/' ) )
 			->andReturn( '42' );
 
 		$this->assertSame( 42, ( new NotFoundLog() )->count() );
@@ -210,7 +210,7 @@ final class NotFoundLogTest extends WpdbTestCase {
 
 		( new NotFoundLog() )->delete( array( 4, '9', 0 ) );
 
-		$this->assertStringContainsString( 'DELETE FROM wp_fv_erh_404_log WHERE id IN (%d,%d)', $this->prepared[0]['sql'] );
+		$this->assertStringContainsString( 'DELETE FROM wp_fvrh404_404_log WHERE id IN (%d,%d)', $this->prepared[0]['sql'] );
 		$this->assertSame( array( array( 4, 9 ) ), $this->prepared[0]['args'] );
 	}
 
@@ -226,7 +226,7 @@ final class NotFoundLogTest extends WpdbTestCase {
 		$this->wpdb->shouldReceive( 'update' )
 			->once()
 			->with(
-				'wp_fv_erh_404_log',
+				'wp_fvrh404_404_log',
 				array( 'status' => NotFoundLog::STATUS_REDIRECTED ),
 				array( 'url_hash' => md5( '/gone' ) ),
 				array( '%s' ),

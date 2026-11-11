@@ -2,17 +2,17 @@
 /**
  * Unit tests for the hourly cron tasks.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Cron;
+namespace ForestValley\RedirectHelper\Tests\Unit\Cron;
 
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionState;
-use FV\WPEcwidRedirectHelper\Cron\Tasks;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Connection\ConnectionState;
+use ForestValley\RedirectHelper\Cron\Tasks;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 
 /**
  * Covers the scheduling guards, the connection gating of the hourly run, and
@@ -170,7 +170,7 @@ final class TasksTest extends WpdbTestCase {
 			->once()
 			->withArgs(
 				static function ( $table, $data ) {
-					return 'wp_fv_erh_404_log' === $table && 'in-catalog' === $data['verdict'];
+					return 'wp_fvrh404_404_log' === $table && 'in-catalog' === $data['verdict'];
 				}
 			)
 			->andReturn( 1 );

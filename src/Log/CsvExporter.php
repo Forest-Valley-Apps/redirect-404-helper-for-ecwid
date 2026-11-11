@@ -2,12 +2,12 @@
 /**
  * CSV writer for the 404 log.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Log;
+namespace ForestValley\RedirectHelper\Log;
 
 defined( 'ABSPATH' ) || exit;
 

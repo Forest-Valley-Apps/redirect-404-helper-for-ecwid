@@ -3,23 +3,23 @@
  * Smoke tests for the install lifecycle: fresh activation and the
  * version-gated update migration.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit;
+namespace ForestValley\RedirectHelper\Tests\Unit;
 
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Cron\Tasks;
-use FV\WPEcwidRedirectHelper\Log\Schema;
-use FV\WPEcwidRedirectHelper\Plugin;
+use ForestValley\RedirectHelper\Cron\Tasks;
+use ForestValley\RedirectHelper\Log\Schema;
+use ForestValley\RedirectHelper\Plugin;
 use Mockery;
 
 /**
  * Pins what a fresh activation and a plugin *update* (no activation hook)
  * leave behind: both tables in their schema-v3 shape, the recorded
- * `fv_erh_db_version`, and the scheduled hourly cron event.
+ * `fvrh404_db_version`, and the scheduled hourly cron event.
  *
  * What a unit test cannot prove is dbDelta's row-preserving in-place
  * ALTER of a live, seeded v1 table — that diff happens inside WordPress
@@ -58,8 +58,8 @@ final class InstallLifecycleTest extends WpdbTestCase {
 		$all_sql = implode( "\n", $created );
 
 		// Both tables, fully prefixed.
-		$this->assertStringContainsString( 'CREATE TABLE wp_fv_erh_404_log', $all_sql );
-		$this->assertStringContainsString( 'CREATE TABLE wp_fv_erh_redirects', $all_sql );
+		$this->assertStringContainsString( 'CREATE TABLE wp_fvrh404_404_log', $all_sql );
+		$this->assertStringContainsString( 'CREATE TABLE wp_fvrh404_redirects', $all_sql );
 
 		// The v3 verdict columns and keys (added in S6) are part of the shape.
 		$this->assertStringContainsString( "verdict varchar(20) NOT NULL DEFAULT ''", $all_sql );
@@ -72,7 +72,7 @@ final class InstallLifecycleTest extends WpdbTestCase {
 		// uninstall.php and the migration tests below all assume the v3 option
 		// value; a bump must consciously revisit them.
 		$this->assertSame( '3', Schema::DB_VERSION );
-		$this->assertSame( 'fv_erh_db_version', Schema::VERSION_OPTION );
+		$this->assertSame( 'fvrh404_db_version', Schema::VERSION_OPTION );
 	}
 
 	public function test_fresh_activation_creates_v3_tables_records_version_and_schedules_cron(): void {

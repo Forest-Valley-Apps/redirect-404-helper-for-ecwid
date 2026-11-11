@@ -2,16 +2,16 @@
 /**
  * Unit tests for the Ecwid plugin discovery class.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Connection;
+namespace ForestValley\RedirectHelper\Tests\Unit\Connection;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Connection\EcwidPluginDiscovery;
+use ForestValley\RedirectHelper\Connection\EcwidPluginDiscovery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 

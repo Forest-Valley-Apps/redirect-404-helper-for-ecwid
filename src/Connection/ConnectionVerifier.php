@@ -2,15 +2,15 @@
 /**
  * Verifies a discovered Ecwid connection against the live services.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Connection;
+namespace ForestValley\RedirectHelper\Connection;
 
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Api\EcwidCatalogClient;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Api\EcwidCatalogClient;
 
 defined( 'ABSPATH' ) || exit;
 

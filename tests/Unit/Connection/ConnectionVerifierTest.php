@@ -2,18 +2,18 @@
 /**
  * Unit tests for the connection verifier.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Connection;
+namespace ForestValley\RedirectHelper\Tests\Unit\Connection;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Api\EcwidCatalogClient;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionVerifier;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Api\EcwidCatalogClient;
+use ForestValley\RedirectHelper\Connection\ConnectionVerifier;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 

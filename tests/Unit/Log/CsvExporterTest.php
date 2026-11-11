@@ -2,14 +2,14 @@
 /**
  * Unit tests for the CSV exporter.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Log;
+namespace ForestValley\RedirectHelper\Tests\Unit\Log;
 
-use FV\WPEcwidRedirectHelper\Log\CsvExporter;
+use ForestValley\RedirectHelper\Log\CsvExporter;
 use PHPUnit\Framework\TestCase;
 
 /**

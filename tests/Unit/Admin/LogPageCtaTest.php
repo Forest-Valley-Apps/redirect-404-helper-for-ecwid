@@ -2,17 +2,17 @@
 /**
  * Unit tests for the 404-log counted upgrade-CTA selection.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Admin;
+namespace ForestValley\RedirectHelper\Tests\Unit\Admin;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Admin\LogPage;
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Admin\LogPage;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
 use PHPUnit\Framework\TestCase;
 
 /**

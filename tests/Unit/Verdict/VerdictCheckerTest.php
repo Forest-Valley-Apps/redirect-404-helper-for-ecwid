@@ -2,19 +2,19 @@
 /**
  * Unit tests for the deleted-vs-typo verdict checker.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Verdict;
+namespace ForestValley\RedirectHelper\Tests\Unit\Verdict;
 
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Api\EcwidCatalogClient;
-use FV\WPEcwidRedirectHelper\Log\NotFoundLog;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
-use FV\WPEcwidRedirectHelper\Verdict\VerdictChecker;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Api\EcwidCatalogClient;
+use ForestValley\RedirectHelper\Log\NotFoundLog;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Verdict\VerdictChecker;
 
 /**
  * Covers the verdict decision matrix and the batch/lazy-fetch behaviour.
@@ -176,7 +176,7 @@ final class VerdictCheckerTest extends WpdbTestCase {
 			->once()
 			->withArgs(
 				function ( $table, $data, $where ) use ( $classification, $entity_id, $verdict ) {
-					return 'wp_fv_erh_404_log' === $table
+					return 'wp_fvrh404_404_log' === $table
 						&& $verdict === $data['verdict']
 						&& '' !== $data['verdict_checked_at']
 						&& $classification === $where['classification']

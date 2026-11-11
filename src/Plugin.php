@@ -2,22 +2,22 @@
 /**
  * Core plugin bootstrap.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper;
+namespace ForestValley\RedirectHelper;
 
-use FV\WPEcwidRedirectHelper\Admin\Assets;
-use FV\WPEcwidRedirectHelper\Admin\Menu;
-use FV\WPEcwidRedirectHelper\Capture\NotFoundCapture;
-use FV\WPEcwidRedirectHelper\Collision\CollisionNotice;
-use FV\WPEcwidRedirectHelper\Collision\CollisionScanner;
-use FV\WPEcwidRedirectHelper\Cron\Tasks;
-use FV\WPEcwidRedirectHelper\Log\Schema;
-use FV\WPEcwidRedirectHelper\Redirect\Redirector;
-use FV\WPEcwidRedirectHelper\Upsell\UpgradeCta;
+use ForestValley\RedirectHelper\Admin\Assets;
+use ForestValley\RedirectHelper\Admin\Menu;
+use ForestValley\RedirectHelper\Capture\NotFoundCapture;
+use ForestValley\RedirectHelper\Collision\CollisionNotice;
+use ForestValley\RedirectHelper\Collision\CollisionScanner;
+use ForestValley\RedirectHelper\Cron\Tasks;
+use ForestValley\RedirectHelper\Log\Schema;
+use ForestValley\RedirectHelper\Redirect\Redirector;
+use ForestValley\RedirectHelper\Upsell\UpgradeCta;
 
 defined( 'ABSPATH' ) || exit;
 

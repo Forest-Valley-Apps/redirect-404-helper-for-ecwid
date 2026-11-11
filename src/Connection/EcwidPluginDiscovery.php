@@ -2,12 +2,12 @@
 /**
  * Discovers the official Ecwid plugin's store id + public token.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Connection;
+namespace ForestValley\RedirectHelper\Connection;
 
 defined( 'ABSPATH' ) || exit;
 

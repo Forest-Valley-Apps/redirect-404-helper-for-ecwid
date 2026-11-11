@@ -2,16 +2,16 @@
 /**
  * Unit tests for the hosted-backend HTTP client.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Api;
+namespace ForestValley\RedirectHelper\Tests\Unit\Api;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Api\BackendClient;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
@@ -105,7 +105,7 @@ final class BackendClientTest extends TestCase {
 
 		Functions\expect( 'set_transient' )
 			->once()
-			->with( 'fv_erh_rules_' . self::STORE_ID, \Mockery::type( 'array' ), 900 );
+			->with( 'fvrh404_rules_' . self::STORE_ID, \Mockery::type( 'array' ), 900 );
 
 		$rules = $this->client()->get_rules();
 
@@ -209,7 +209,7 @@ final class BackendClientTest extends TestCase {
 	public function test_clear_rules_cache_deletes_the_transient(): void {
 		Functions\expect( 'delete_transient' )
 			->once()
-			->with( 'fv_erh_rules_' . self::STORE_ID );
+			->with( 'fvrh404_rules_' . self::STORE_ID );
 
 		$this->client()->clear_rules_cache();
 	}
@@ -229,7 +229,7 @@ final class BackendClientTest extends TestCase {
 		Functions\expect( 'get_transient' )->never();
 		Functions\expect( 'set_transient' )
 			->once()
-			->with( 'fv_erh_rules_' . self::STORE_ID, \Mockery::type( 'array' ), 900 );
+			->with( 'fvrh404_rules_' . self::STORE_ID, \Mockery::type( 'array' ), 900 );
 
 		$this->assertTrue( $this->client()->ping() );
 	}
@@ -282,7 +282,7 @@ final class BackendClientTest extends TestCase {
 
 		Functions\expect( 'set_transient' )
 			->once()
-			->with( 'fv_erh_deleted_' . self::STORE_ID, \Mockery::type( 'array' ), 3600 );
+			->with( 'fvrh404_deleted_' . self::STORE_ID, \Mockery::type( 'array' ), 3600 );
 
 		$result = $this->client()->get_deleted_entities();
 
@@ -336,7 +336,7 @@ final class BackendClientTest extends TestCase {
 		// "Never installed the app" is a definite answer worth caching too.
 		Functions\expect( 'set_transient' )
 			->once()
-			->with( 'fv_erh_deleted_' . self::STORE_ID, \Mockery::type( 'array' ), 3600 );
+			->with( 'fvrh404_deleted_' . self::STORE_ID, \Mockery::type( 'array' ), 3600 );
 
 		$result = $this->client()->get_deleted_entities();
 
@@ -410,7 +410,7 @@ final class BackendClientTest extends TestCase {
 	public function test_clear_deleted_cache_deletes_the_transient(): void {
 		Functions\expect( 'delete_transient' )
 			->once()
-			->with( 'fv_erh_deleted_' . self::STORE_ID );
+			->with( 'fvrh404_deleted_' . self::STORE_ID );
 
 		$this->client()->clear_deleted_cache();
 	}
@@ -437,7 +437,7 @@ final class BackendClientTest extends TestCase {
 		// stays distinguishable from get_transient()'s missing-key `false`.
 		Functions\expect( 'set_transient' )
 			->once()
-			->with( 'fv_erh_app_status_' . self::STORE_ID, array( 'installed' => true ), 3600 );
+			->with( 'fvrh404_app_status_' . self::STORE_ID, array( 'installed' => true ), 3600 );
 
 		$this->assertTrue( $this->client()->get_app_installed() );
 	}
@@ -456,7 +456,7 @@ final class BackendClientTest extends TestCase {
 		// "Definitely not installed" is a real answer worth caching too.
 		Functions\expect( 'set_transient' )
 			->once()
-			->with( 'fv_erh_app_status_' . self::STORE_ID, array( 'installed' => false ), 3600 );
+			->with( 'fvrh404_app_status_' . self::STORE_ID, array( 'installed' => false ), 3600 );
 
 		$this->assertFalse( $this->client()->get_app_installed() );
 	}

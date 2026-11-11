@@ -1,5 +1,5 @@
 {
-    "name": "fv/redirect-404-helper-for-ecwid",
+    "name": "forest-valley/redirect-404-helper-for-ecwid",
     "description": "Ecwid-aware 404 logging and redirects for WordPress.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "FV\\WPEcwidRedirectHelper\\": "src/"
+            "ForestValley\\RedirectHelper\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FV\\WPEcwidRedirectHelper\\Tests\\": "tests/"
+            "ForestValley\\RedirectHelper\\Tests\\": "tests/"
         }
     },
     "config": {

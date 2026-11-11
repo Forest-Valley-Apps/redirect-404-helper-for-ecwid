@@ -2,16 +2,16 @@
 /**
  * Guard-contract tests for the redirects page's mutation handlers.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Admin;
+namespace ForestValley\RedirectHelper\Tests\Unit\Admin;
 
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Admin\RedirectsPage;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Admin\RedirectsPage;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 use RuntimeException;
 
 /**
@@ -244,7 +244,7 @@ final class RedirectsPageGuardsTest extends WpdbTestCase {
 		$_REQUEST['ids']    = array( '3', '4' );
 
 		$this->expect_capability_check( true );
-		$this->expect_nonce_check( 'bulk-fv-erh-redirects' );
+		$this->expect_nonce_check( 'bulk-fvrh404-redirects' );
 
 		$page = new RedirectsPage();
 		$this->assert_stopped_by(

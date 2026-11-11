@@ -2,15 +2,15 @@
 /**
  * Unit tests for the manual-redirect repository.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Redirect;
+namespace ForestValley\RedirectHelper\Tests\Unit\Redirect;
 
-use FV\WPEcwidRedirectHelper\Redirect\RedirectStore;
-use FV\WPEcwidRedirectHelper\Tests\Unit\WpdbTestCase;
+use ForestValley\RedirectHelper\Redirect\RedirectStore;
+use ForestValley\RedirectHelper\Tests\Unit\WpdbTestCase;
 
 /**
  * Covers create validation (source/destination/duplicate/loop/cycle), the
@@ -50,7 +50,7 @@ final class RedirectStoreTest extends WpdbTestCase {
 		$result = ( new RedirectStore() )->add( ' /Old-Page/ ', '/new-page' );
 
 		$this->assertSame( RedirectStore::ADDED, $result );
-		$this->assertSame( 'wp_fv_erh_redirects', $this->inserted['table'] );
+		$this->assertSame( 'wp_fvrh404_redirects', $this->inserted['table'] );
 		$this->assertSame( '/old-page', $this->inserted['source'] );
 		$this->assertSame( md5( '/old-page' ), $this->inserted['source_hash'] );
 		$this->assertSame( '/new-page', $this->inserted['destination'] );
@@ -228,7 +228,7 @@ final class RedirectStoreTest extends WpdbTestCase {
 
 		( new RedirectStore() )->delete( array( 3, '8', 0 ) );
 
-		$this->assertStringContainsString( 'DELETE FROM wp_fv_erh_redirects WHERE id IN (%d,%d)', $this->prepared[0]['sql'] );
+		$this->assertStringContainsString( 'DELETE FROM wp_fvrh404_redirects WHERE id IN (%d,%d)', $this->prepared[0]['sql'] );
 		$this->assertSame( array( array( 3, 8 ) ), $this->prepared[0]['args'] );
 	}
 
@@ -244,7 +244,7 @@ final class RedirectStoreTest extends WpdbTestCase {
 		$this->wpdb->shouldReceive( 'update' )
 			->once()
 			->with(
-				'wp_fv_erh_redirects',
+				'wp_fvrh404_redirects',
 				array( 'active' => 0 ),
 				array( 'id' => 5 ),
 				array( '%d' ),
@@ -260,7 +260,7 @@ final class RedirectStoreTest extends WpdbTestCase {
 		( new RedirectStore() )->record_hit( '/old-page' );
 
 		$sql = $this->prepared[0]['sql'];
-		$this->assertStringContainsString( 'UPDATE wp_fv_erh_redirects', $sql );
+		$this->assertStringContainsString( 'UPDATE wp_fvrh404_redirects', $sql );
 		$this->assertStringContainsString( 'hit_count = hit_count + 1', $sql );
 		$this->assertSame( md5( '/old-page' ), $this->prepared[0]['args'][1] );
 	}

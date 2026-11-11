@@ -2,20 +2,20 @@
 /**
  * Connection settings screen.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Admin;
+namespace ForestValley\RedirectHelper\Admin;
 
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Api\EcwidCatalogClient;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionState;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionVerifier;
-use FV\WPEcwidRedirectHelper\Connection\EcwidPluginDiscovery;
-use FV\WPEcwidRedirectHelper\Upsell\AppButton;
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Api\EcwidCatalogClient;
+use ForestValley\RedirectHelper\Connection\ConnectionState;
+use ForestValley\RedirectHelper\Connection\ConnectionVerifier;
+use ForestValley\RedirectHelper\Connection\EcwidPluginDiscovery;
+use ForestValley\RedirectHelper\Upsell\AppButton;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -36,7 +36,7 @@ final class SettingsPage {
 	 *
 	 * @var string
 	 */
-	public const PAGE_SLUG = 'fv-erh-settings';
+	public const PAGE_SLUG = 'fvrh404-settings';
 
 	/**
 	 * Required capability for the page and all of its actions.
@@ -50,21 +50,21 @@ final class SettingsPage {
 	 *
 	 * @var string
 	 */
-	private const ACTION_CONNECT = 'fv_erh_connect';
+	private const ACTION_CONNECT = 'fvrh404_connect';
 
 	/**
 	 * The admin-post action that re-verifies and refreshes the cached ruleset.
 	 *
 	 * @var string
 	 */
-	private const ACTION_REFRESH = 'fv_erh_refresh';
+	private const ACTION_REFRESH = 'fvrh404_refresh';
 
 	/**
 	 * The admin-post action that disconnects.
 	 *
 	 * @var string
 	 */
-	private const ACTION_DISCONNECT = 'fv_erh_disconnect';
+	private const ACTION_DISCONNECT = 'fvrh404_disconnect';
 
 	/**
 	 * Persisted connect/disconnect state.
@@ -100,47 +100,47 @@ final class SettingsPage {
 	 */
 	public function render_page(): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to access this page.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		$discovery = EcwidPluginDiscovery::discover();
 		$connected = $this->state->is_connected();
 
 		echo '<div class="wrap">';
-		echo '<h1>' . esc_html__( 'Redirect & 404 Helper for Ecwid', 'redirect-404-helper-for-ecwid' ) . '</h1>';
+		echo '<h1>' . esc_html__( 'Forest Valley Redirect & 404 Helper for Ecwid', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</h1>';
 
 		$this->render_notice();
 
 		echo '<table class="form-table" role="presentation"><tbody>';
 		$this->render_row(
-			__( 'Ecwid plugin', 'redirect-404-helper-for-ecwid' ),
+			__( 'Ecwid plugin', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			$discovery->plugin_active()
-				? __( 'Detected', 'redirect-404-helper-for-ecwid' )
-				: __( 'Not detected', 'redirect-404-helper-for-ecwid' )
+				? __( 'Detected', 'forest-valley-redirect-404-helper-for-ecwid' )
+				: __( 'Not detected', 'forest-valley-redirect-404-helper-for-ecwid' )
 		);
 		$this->render_row(
-			__( 'Store ID', 'redirect-404-helper-for-ecwid' ),
+			__( 'Store ID', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			$discovery->has_store_id()
 				? (string) $discovery->store_id()
-				: __( '—', 'redirect-404-helper-for-ecwid' )
+				: __( '—', 'forest-valley-redirect-404-helper-for-ecwid' )
 		);
 		$this->render_row(
-			__( 'Storefront token', 'redirect-404-helper-for-ecwid' ),
+			__( 'Storefront token', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			$discovery->has_public_token()
-				? __( 'Available', 'redirect-404-helper-for-ecwid' )
-				: __( 'Not available', 'redirect-404-helper-for-ecwid' )
+				? __( 'Available', 'forest-valley-redirect-404-helper-for-ecwid' )
+				: __( 'Not available', 'forest-valley-redirect-404-helper-for-ecwid' )
 		);
 		$this->render_row(
-			__( 'Connection', 'redirect-404-helper-for-ecwid' ),
+			__( 'Connection', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			$connected
-				? __( 'Connected', 'redirect-404-helper-for-ecwid' )
-				: __( 'Not connected', 'redirect-404-helper-for-ecwid' )
+				? __( 'Connected', 'forest-valley-redirect-404-helper-for-ecwid' )
+				: __( 'Not connected', 'forest-valley-redirect-404-helper-for-ecwid' )
 		);
 
 		$verified_at = $this->state->verified_at();
 		if ( $verified_at > 0 ) {
 			$this->render_row(
-				__( 'Last verified', 'redirect-404-helper-for-ecwid' ),
+				__( 'Last verified', 'forest-valley-redirect-404-helper-for-ecwid' ),
 				$this->format_timestamp( $verified_at )
 			);
 		}
@@ -177,7 +177,7 @@ final class SettingsPage {
 	 * connection, persist it, and redirect back with the outcome.
 	 *
 	 * The backend half of the verification already primes the cached ruleset on
-	 * success ({@see \FV\WPEcwidRedirectHelper\Api\BackendClient::ping()}), so no
+	 * success ({@see \ForestValley\RedirectHelper\Api\BackendClient::ping()}), so no
 	 * separate rules fetch is needed here.
 	 *
 	 * @param string $success_notice Notice code to redirect with on success.
@@ -226,7 +226,7 @@ final class SettingsPage {
 	 */
 	private function guard( string $action ): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		check_admin_referer( $action );
@@ -239,7 +239,7 @@ final class SettingsPage {
 	 * @return void
 	 */
 	private function redirect_back( string $notice ): void {
-		wp_safe_redirect( add_query_arg( 'fv_erh_notice', $notice, $this->page_url() ) );
+		wp_safe_redirect( add_query_arg( 'fvrh404_notice', $notice, $this->page_url() ) );
 		exit;
 	}
 
@@ -304,21 +304,21 @@ final class SettingsPage {
 		if ( EcwidPluginDiscovery::STATUS_READY === $discovery->status() ) {
 			if ( $connected ) {
 				printf(
-					'<div class="fv-erh-layer-banner">'
-						. '<img class="fv-erh-layer-banner__logo" src="%1$s" alt="" width="40" height="20" />'
-						. '<p class="fv-erh-layer-banner__text">%2$s '
+					'<div class="fvrh404-layer-banner">'
+						. '<img class="fvrh404-layer-banner__logo" src="%1$s" alt="" width="40" height="20" />'
+						. '<p class="fvrh404-layer-banner__text">%2$s '
 						. '<a href="%3$s" target="_blank" rel="noopener noreferrer">%4$s <span aria-hidden="true">↗</span></a>'
 						. '</p></div>',
 					esc_url( AppButton::logo_url() ),
-					esc_html__( 'Your store is connected. Your Ecwid 404s and WordPress redirect hits flow to the Redirect & 404 Manager dashboard — your unified home for every fix. Use Refresh to re-verify and reload redirect rules.', 'redirect-404-helper-for-ecwid' ),
+					esc_html__( 'Your store is connected. Your Ecwid 404s and WordPress redirect hits flow to the Redirect & 404 Manager dashboard — your unified home for every fix. Use Refresh to re-verify and reload redirect rules.', 'forest-valley-redirect-404-helper-for-ecwid' ),
 					esc_url( DeepLink::from_environment()->url_for( DeepLink::TARGET_HOME ) ),
-					esc_html__( 'Open the dashboard', 'redirect-404-helper-for-ecwid' )
+					esc_html__( 'Open the dashboard', 'forest-valley-redirect-404-helper-for-ecwid' )
 				);
 			} else {
 				printf(
-					'<p><img class="fv-erh-inline-logo" src="%1$s" alt="" width="20" height="10" /> %2$s</p>',
+					'<p><img class="fvrh404-inline-logo" src="%1$s" alt="" width="20" height="10" /> %2$s</p>',
 					esc_url( AppButton::logo_url() ),
-					esc_html__( 'Your Ecwid store was detected. Click Connect to verify it and start surfacing your Ecwid 404s — once connected, those 404s and your WordPress redirect hits flow to the Redirect & 404 Manager dashboard, the unified home where storefront-layer fixes live.', 'redirect-404-helper-for-ecwid' )
+					esc_html__( 'Your Ecwid store was detected. Click Connect to verify it and start surfacing your Ecwid 404s — once connected, those 404s and your WordPress redirect hits flow to the Redirect & 404 Manager dashboard, the unified home where storefront-layer fixes live.', 'forest-valley-redirect-404-helper-for-ecwid' )
 				);
 			}
 
@@ -329,13 +329,13 @@ final class SettingsPage {
 
 		switch ( $discovery->status() ) {
 			case EcwidPluginDiscovery::STATUS_PLUGIN_MISSING:
-				$message = __( 'Install and activate the official Ecwid Shopping Cart plugin, then configure your store to connect.', 'redirect-404-helper-for-ecwid' );
+				$message = __( 'Install and activate the official Ecwid Shopping Cart plugin, then configure your store to connect.', 'forest-valley-redirect-404-helper-for-ecwid' );
 				break;
 			case EcwidPluginDiscovery::STATUS_NOT_CONFIGURED:
-				$message = __( 'The Ecwid plugin is active but no store is configured yet. Connect your Ecwid store in its settings first.', 'redirect-404-helper-for-ecwid' );
+				$message = __( 'The Ecwid plugin is active but no store is configured yet. Connect your Ecwid store in its settings first.', 'forest-valley-redirect-404-helper-for-ecwid' );
 				break;
 			case EcwidPluginDiscovery::STATUS_NO_TOKEN:
-				$message = __( 'A store ID was found but no storefront token is available yet. Reconnect your store in the Ecwid plugin to issue one.', 'redirect-404-helper-for-ecwid' );
+				$message = __( 'A store ID was found but no storefront token is available yet. Reconnect your store in the Ecwid plugin to issue one.', 'forest-valley-redirect-404-helper-for-ecwid' );
 				break;
 		}
 
@@ -353,12 +353,12 @@ final class SettingsPage {
 	 */
 	private function render_actions( EcwidPluginDiscovery $discovery, bool $connected ): void {
 		if ( $discovery->is_ready() && ! $connected ) {
-			$this->render_action_form( self::ACTION_CONNECT, __( 'Connect', 'redirect-404-helper-for-ecwid' ), 'primary' );
+			$this->render_action_form( self::ACTION_CONNECT, __( 'Connect', 'forest-valley-redirect-404-helper-for-ecwid' ), 'primary' );
 		}
 
 		if ( $connected ) {
-			$this->render_action_form( self::ACTION_REFRESH, __( 'Refresh', 'redirect-404-helper-for-ecwid' ), 'primary' );
-			$this->render_action_form( self::ACTION_DISCONNECT, __( 'Disconnect', 'redirect-404-helper-for-ecwid' ), 'secondary' );
+			$this->render_action_form( self::ACTION_REFRESH, __( 'Refresh', 'forest-valley-redirect-404-helper-for-ecwid' ), 'primary' );
+			$this->render_action_form( self::ACTION_DISCONNECT, __( 'Disconnect', 'forest-valley-redirect-404-helper-for-ecwid' ), 'secondary' );
 		}
 	}
 
@@ -389,7 +389,7 @@ final class SettingsPage {
 		// Display-only read of our own post/redirect/get marker; the originating
 		// action was already nonce-verified before this redirect was issued.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$code = isset( $_GET['fv_erh_notice'] ) ? sanitize_key( wp_unslash( $_GET['fv_erh_notice'] ) ) : '';
+		$code = isset( $_GET['fvrh404_notice'] ) ? sanitize_key( wp_unslash( $_GET['fvrh404_notice'] ) ) : '';
 		if ( '' === $code ) {
 			return;
 		}
@@ -415,19 +415,19 @@ final class SettingsPage {
 	private function notice_message( string $code ): array {
 		switch ( $code ) {
 			case 'connected':
-				return array( 'success', __( 'Connected to your Ecwid store.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'success', __( 'Connected to your Ecwid store.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'refreshed':
-				return array( 'success', __( 'Connection re-verified and redirect rules refreshed.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'success', __( 'Connection re-verified and redirect rules refreshed.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'disconnected':
-				return array( 'success', __( 'Disconnected from your Ecwid store.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'success', __( 'Disconnected from your Ecwid store.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'not-ready':
-				return array( 'warning', __( 'Your Ecwid store is not fully configured yet.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'warning', __( 'Your Ecwid store is not fully configured yet.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'verify-' . ConnectionVerifier::BACKEND_UNREACHABLE:
-				return array( 'error', __( 'The redirect service could not be reached. Try again shortly.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'error', __( 'The redirect service could not be reached. Try again shortly.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'verify-' . ConnectionVerifier::AUTH_FAILED:
-				return array( 'error', __( 'The Ecwid storefront token was rejected. Reconnect your store in the Ecwid plugin.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'error', __( 'The Ecwid storefront token was rejected. Reconnect your store in the Ecwid plugin.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			case 'verify-' . ConnectionVerifier::CATALOG_UNREACHABLE:
-				return array( 'error', __( 'The Ecwid catalog could not be reached to confirm the connection. Try again shortly.', 'redirect-404-helper-for-ecwid' ) );
+				return array( 'error', __( 'The Ecwid catalog could not be reached to confirm the connection. Try again shortly.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 			default:
 				return array( '', '' );
 		}

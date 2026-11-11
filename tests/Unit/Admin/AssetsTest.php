@@ -2,16 +2,16 @@
 /**
  * Unit tests for the admin stylesheet enqueue.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Admin;
+namespace ForestValley\RedirectHelper\Tests\Unit\Admin;
 
 use Brain\Monkey;
 use Brain\Monkey\Functions;
-use FV\WPEcwidRedirectHelper\Admin\Assets;
+use ForestValley\RedirectHelper\Admin\Assets;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
@@ -37,12 +37,12 @@ final class AssetsTest extends TestCase {
 
 	public function test_enqueues_inline_style_on_a_plugin_screen(): void {
 		Functions\expect( 'wp_register_style' )->once();
-		Functions\expect( 'wp_enqueue_style' )->once()->with( 'fv-erh-admin' );
+		Functions\expect( 'wp_enqueue_style' )->once()->with( 'fvrh404-admin' );
 		Functions\expect( 'wp_add_inline_style' )
 			->once()
-			->with( 'fv-erh-admin', Mockery::type( 'string' ) );
+			->with( 'fvrh404-admin', Mockery::type( 'string' ) );
 
-		( new Assets() )->enqueue( 'toplevel_page_fv-erh-404-log' );
+		( new Assets() )->enqueue( 'toplevel_page_fvrh404-404-log' );
 	}
 
 	public function test_enqueues_on_a_plugin_submenu_screen(): void {
@@ -50,7 +50,7 @@ final class AssetsTest extends TestCase {
 		Functions\expect( 'wp_enqueue_style' )->once();
 		Functions\expect( 'wp_add_inline_style' )->once();
 
-		( new Assets() )->enqueue( 'redirect-404_page_fv-erh-redirects' );
+		( new Assets() )->enqueue( 'redirect-404_page_fvrh404-redirects' );
 	}
 
 	public function test_does_nothing_off_plugin_screens(): void {

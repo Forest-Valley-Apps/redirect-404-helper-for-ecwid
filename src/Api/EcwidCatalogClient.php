@@ -2,12 +2,12 @@
 /**
  * Ecwid storefront catalog client.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Api;
+namespace ForestValley\RedirectHelper\Api;
 
 defined( 'ABSPATH' ) || exit;
 

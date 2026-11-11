@@ -2,15 +2,15 @@
 /**
  * Unit tests for the hosted-app deep-link builder.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Upsell;
+namespace ForestValley\RedirectHelper\Tests\Unit\Upsell;
 
 use Brain\Monkey;
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 

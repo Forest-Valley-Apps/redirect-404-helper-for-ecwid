@@ -2,15 +2,15 @@
 /**
  * "Powered by Redirect & 404 Manager" upgrade page.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Admin;
+namespace ForestValley\RedirectHelper\Admin;
 
-use FV\WPEcwidRedirectHelper\Upsell\AppButton;
-use FV\WPEcwidRedirectHelper\Upsell\DeepLink;
+use ForestValley\RedirectHelper\Upsell\AppButton;
+use ForestValley\RedirectHelper\Upsell\DeepLink;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * This is not a CTA injected into another screen — the merchant chooses to open
  * it from the menu, so it lists every paid feature unconditionally. The
- * contextual, dismissible prompts elsewhere ({@see \FV\WPEcwidRedirectHelper\Upsell\UpgradeCta})
+ * contextual, dismissible prompts elsewhere ({@see \ForestValley\RedirectHelper\Upsell\UpgradeCta})
  * are what stay out of the way; this page is where the detail lives.
  *
  * The free/paid line is drawn at **layer + scale**, and the page says so: the
@@ -36,7 +36,7 @@ final class UpgradePage {
 	 *
 	 * @var string
 	 */
-	public const PAGE_SLUG = 'fv-erh-upgrade';
+	public const PAGE_SLUG = 'fvrh404-upgrade';
 
 	/**
 	 * Required capability for the page.
@@ -85,32 +85,32 @@ final class UpgradePage {
 	 */
 	public function render(): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to access this page.', 'redirect-404-helper-for-ecwid' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'forest-valley-redirect-404-helper-for-ecwid' ) );
 		}
 
 		echo '<div class="wrap">';
-		echo '<div class="fv-erh-upgrade__header">';
+		echo '<div class="fvrh404-upgrade__header">';
 		printf(
-			'<img class="fv-erh-upgrade__logo" src="%s" alt="" width="88" height="44" />',
+			'<img class="fvrh404-upgrade__logo" src="%s" alt="" width="88" height="44" />',
 			esc_url( AppButton::logo_url() )
 		);
-		echo '<h1>' . esc_html__( 'Upgrade — Powered by Redirect & 404 Manager', 'redirect-404-helper-for-ecwid' ) . '</h1>';
+		echo '<h1>' . esc_html__( 'Upgrade — Powered by Redirect & 404 Manager', 'forest-valley-redirect-404-helper-for-ecwid' ) . '</h1>';
 		echo '</div>';
 
-		echo '<p class="fv-erh-upgrade__lead">';
+		echo '<p class="fvrh404-upgrade__lead">';
 		echo esc_html__(
 			'This free plugin finds, classifies, and lets you hand-fix 404s at the WordPress layer. The Redirect & 404 Manager app — which runs inside your Ecwid admin — automates that work in bulk and reaches the Ecwid storefront layer a WordPress plugin cannot. Each button below opens the app on the matching screen; nothing is changed on your store until you act there.',
-			'redirect-404-helper-for-ecwid'
+			'forest-valley-redirect-404-helper-for-ecwid'
 		);
 		echo '</p>';
 
 		if ( ! $this->deep_link()->can_deep_link() ) {
-			echo '<p class="fv-erh-upgrade__note">'
-				. esc_html__( 'Connect your Ecwid store (Settings) to deep-link straight into these screens. Until then the buttons open the app listing.', 'redirect-404-helper-for-ecwid' )
+			echo '<p class="fvrh404-upgrade__note">'
+				. esc_html__( 'Connect your Ecwid store (Settings) to deep-link straight into these screens. Until then the buttons open the app listing.', 'forest-valley-redirect-404-helper-for-ecwid' )
 				. '</p>';
 		}
 
-		echo '<div class="fv-erh-upgrade__grid">';
+		echo '<div class="fvrh404-upgrade__grid">';
 		foreach ( $this->features() as $feature ) {
 			$this->render_feature( $feature );
 		}
@@ -128,27 +128,27 @@ final class UpgradePage {
 		return array(
 			array(
 				'target' => DeepLink::TARGET_BULK_MAPPING,
-				'title'  => __( 'Bulk old→new URL mapping', 'redirect-404-helper-for-ecwid' ),
-				'body'   => __( 'Map many old URLs to their new destinations at once, instead of adding redirects one at a time — the migration workhorse generic tools cannot do for Ecwid.', 'redirect-404-helper-for-ecwid' ),
-				'cta'    => __( 'Open bulk mapping', 'redirect-404-helper-for-ecwid' ),
+				'title'  => __( 'Bulk old→new URL mapping', 'forest-valley-redirect-404-helper-for-ecwid' ),
+				'body'   => __( 'Map many old URLs to their new destinations at once, instead of adding redirects one at a time — the migration workhorse generic tools cannot do for Ecwid.', 'forest-valley-redirect-404-helper-for-ecwid' ),
+				'cta'    => __( 'Open bulk mapping', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			),
 			array(
 				'target' => DeepLink::TARGET_MIGRATION_IMPORT,
-				'title'  => __( 'Migration redirect import', 'redirect-404-helper-for-ecwid' ),
-				'body'   => __( 'Import a redirect map from a Shopify, WooCommerce, or BigCommerce migration so old store URLs keep working after the move to Ecwid.', 'redirect-404-helper-for-ecwid' ),
-				'cta'    => __( 'Open migration import', 'redirect-404-helper-for-ecwid' ),
+				'title'  => __( 'Migration redirect import', 'forest-valley-redirect-404-helper-for-ecwid' ),
+				'body'   => __( 'Import a redirect map from a Shopify, WooCommerce, or BigCommerce migration so old store URLs keep working after the move to Ecwid.', 'forest-valley-redirect-404-helper-for-ecwid' ),
+				'cta'    => __( 'Open migration import', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			),
 			array(
 				'target' => DeepLink::TARGET_DELETED_REDIRECTS,
-				'title'  => __( 'Automatic deleted-product redirects', 'redirect-404-helper-for-ecwid' ),
-				'body'   => __( 'When a product or category is deleted, the app redirects its URL automatically (to the parent category or your homepage) — no manual rule per deletion.', 'redirect-404-helper-for-ecwid' ),
-				'cta'    => __( 'Open auto-redirects', 'redirect-404-helper-for-ecwid' ),
+				'title'  => __( 'Automatic deleted-product redirects', 'forest-valley-redirect-404-helper-for-ecwid' ),
+				'body'   => __( 'When a product or category is deleted, the app redirects its URL automatically (to the parent category or your homepage) — no manual rule per deletion.', 'forest-valley-redirect-404-helper-for-ecwid' ),
+				'cta'    => __( 'Open auto-redirects', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			),
 			array(
 				'target' => DeepLink::TARGET_STOREFRONT_LAYER,
-				'title'  => __( 'Storefront-layer redirects', 'redirect-404-helper-for-ecwid' ),
-				'body'   => __( 'Catch 404s inside the embedded Ecwid storefront — the product/category sub-routes that happen in the browser and never reach WordPress, so WordPress-layer redirects cannot touch them.', 'redirect-404-helper-for-ecwid' ),
-				'cta'    => __( 'Open storefront redirects', 'redirect-404-helper-for-ecwid' ),
+				'title'  => __( 'Storefront-layer redirects', 'forest-valley-redirect-404-helper-for-ecwid' ),
+				'body'   => __( 'Catch 404s inside the embedded Ecwid storefront — the product/category sub-routes that happen in the browser and never reach WordPress, so WordPress-layer redirects cannot touch them.', 'forest-valley-redirect-404-helper-for-ecwid' ),
+				'cta'    => __( 'Open storefront redirects', 'forest-valley-redirect-404-helper-for-ecwid' ),
 			),
 		);
 	}
@@ -160,7 +160,7 @@ final class UpgradePage {
 	 * @return void
 	 */
 	private function render_feature( array $feature ): void {
-		echo '<div class="fv-erh-upgrade__card">';
+		echo '<div class="fvrh404-upgrade__card">';
 		echo '<h2>' . esc_html( $feature['title'] ) . '</h2>';
 		echo '<p>' . esc_html( $feature['body'] ) . '</p>';
 		// The ↗ marks a link that opens the hosted app in a new tab.

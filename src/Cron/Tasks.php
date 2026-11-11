@@ -2,18 +2,18 @@
 /**
  * Scheduled background tasks.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Cron;
+namespace ForestValley\RedirectHelper\Cron;
 
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Collision\CollisionScanner;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionState;
-use FV\WPEcwidRedirectHelper\Connection\EcwidPluginDiscovery;
-use FV\WPEcwidRedirectHelper\Verdict\VerdictChecker;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Collision\CollisionScanner;
+use ForestValley\RedirectHelper\Connection\ConnectionState;
+use ForestValley\RedirectHelper\Connection\EcwidPluginDiscovery;
+use ForestValley\RedirectHelper\Verdict\VerdictChecker;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -46,7 +46,7 @@ final class Tasks {
 	 *
 	 * @var string
 	 */
-	public const HOOK = 'fv_erh_hourly_tasks';
+	public const HOOK = 'fvrh404_hourly_tasks';
 
 	/**
 	 * Catalog lookups per cron run.
@@ -59,7 +59,7 @@ final class Tasks {
 	 * Register the cron callback.
 	 *
 	 * Must run on every request type (cron requests are neither admin nor
-	 * ordinary front-end), so {@see \FV\WPEcwidRedirectHelper\Plugin::register()}
+	 * ordinary front-end), so {@see \ForestValley\RedirectHelper\Plugin::register()}
 	 * calls this unconditionally.
 	 *
 	 * @return void

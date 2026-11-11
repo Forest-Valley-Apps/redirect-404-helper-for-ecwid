@@ -2,12 +2,12 @@
 /**
  * Hosted-backend HTTP client.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Api;
+namespace ForestValley\RedirectHelper\Api;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -53,7 +53,7 @@ final class BackendClient {
 	 *
 	 * @var string
 	 */
-	private const RULES_TRANSIENT_PREFIX = 'fv_erh_rules_';
+	private const RULES_TRANSIENT_PREFIX = 'fvrh404_rules_';
 
 	/**
 	 * How long, in seconds, to cache a fetched ruleset.
@@ -67,7 +67,7 @@ final class BackendClient {
 	 *
 	 * @var string
 	 */
-	private const DELETED_TRANSIENT_PREFIX = 'fv_erh_deleted_';
+	private const DELETED_TRANSIENT_PREFIX = 'fvrh404_deleted_';
 
 	/**
 	 * The deleted-entities endpoint's 404 marker for "store never installed
@@ -83,7 +83,7 @@ final class BackendClient {
 	 *
 	 * @var string
 	 */
-	private const APP_STATUS_TRANSIENT_PREFIX = 'fv_erh_app_status_';
+	private const APP_STATUS_TRANSIENT_PREFIX = 'fvrh404_app_status_';
 
 	/**
 	 * How long, in seconds, to cache the app-installed flag.
@@ -170,7 +170,7 @@ final class BackendClient {
 		 *
 		 * @param string $base_url Default production base URL.
 		 */
-		$base_url = (string) apply_filters( 'fv_erh_backend_base_url', self::PROD_BASE_URL );
+		$base_url = (string) apply_filters( 'fvrh404_backend_base_url', self::PROD_BASE_URL );
 
 		return new self( $store_id, $base_url );
 	}

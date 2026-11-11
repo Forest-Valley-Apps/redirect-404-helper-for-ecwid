@@ -7,18 +7,18 @@
  * hash-URL, suffix-matching and wildcard-boundary edge cases documented in the
  * parent product's storefront gotchas reference.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Tests\Unit\Url;
+namespace ForestValley\RedirectHelper\Tests\Unit\Url;
 
-use FV\WPEcwidRedirectHelper\Url\RuleMatcher;
+use ForestValley\RedirectHelper\Url\RuleMatcher;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \FV\WPEcwidRedirectHelper\Url\RuleMatcher
+ * @covers \ForestValley\RedirectHelper\Url\RuleMatcher
  */
 final class RuleMatcherTest extends TestCase {
 

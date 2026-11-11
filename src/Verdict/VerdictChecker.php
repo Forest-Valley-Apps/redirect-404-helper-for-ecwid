@@ -2,19 +2,19 @@
 /**
  * Deleted-vs-typo catalog verdict checker.
  *
- * @package FV\WPEcwidRedirectHelper
+ * @package ForestValley\RedirectHelper
  */
 
 declare( strict_types=1 );
 
-namespace FV\WPEcwidRedirectHelper\Verdict;
+namespace ForestValley\RedirectHelper\Verdict;
 
-use FV\WPEcwidRedirectHelper\Api\BackendClient;
-use FV\WPEcwidRedirectHelper\Api\EcwidCatalogClient;
-use FV\WPEcwidRedirectHelper\Connection\ConnectionState;
-use FV\WPEcwidRedirectHelper\Connection\EcwidPluginDiscovery;
-use FV\WPEcwidRedirectHelper\Log\NotFoundLog;
-use FV\WPEcwidRedirectHelper\Url\UrlClassifier;
+use ForestValley\RedirectHelper\Api\BackendClient;
+use ForestValley\RedirectHelper\Api\EcwidCatalogClient;
+use ForestValley\RedirectHelper\Connection\ConnectionState;
+use ForestValley\RedirectHelper\Connection\EcwidPluginDiscovery;
+use ForestValley\RedirectHelper\Log\NotFoundLog;
+use ForestValley\RedirectHelper\Url\UrlClassifier;
 
 defined( 'ABSPATH' ) || exit;
 
