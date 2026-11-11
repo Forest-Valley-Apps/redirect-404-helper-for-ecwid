@@ -32,11 +32,24 @@ jobs:
         run: composer phpunit
 
   integration:
-    name: Integration (PHP 8.5 + MySQL)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Oldest supported stack: the plugin's PHP + WordPress floors
+          # (Requires PHP 7.4 / Requires at least 6.0) on MySQL 8.0.
+          - php: '7.4'
+            mysql: '8.0'
+            wp: '6.0'
+          # Newest stack.
+          - php: '8.5'
+            mysql: '8.4'
+            wp: 'latest'
+    name: Integration (PHP ${{ matrix.php }} + MySQL ${{ matrix.mysql }} + WP ${{ matrix.wp }})
     services:
       mysql:
-        image: mysql:8.4
+        image: mysql:${{ matrix.mysql }}
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
@@ -52,7 +65,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.5'
+          php-version: ${{ matrix.php }}
           tools: composer
           extensions: mysqli
           coverage: none
@@ -64,7 +77,7 @@ jobs:
         run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Install WordPress test suite + test database
-        run: bash tests/bin/install-wp-tests.sh wordpress_test root root 127.0.0.1:3306 latest
+        run: bash tests/bin/install-wp-tests.sh wordpress_test root root 127.0.0.1:3306 ${{ matrix.wp }}
 
       - name: PHPUnit (integration — schema migration against real WP + MySQL)
         env:
